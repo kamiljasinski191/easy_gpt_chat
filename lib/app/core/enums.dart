@@ -3,5 +3,4 @@ enum Status {
   loading,
   error,
   succes,
-  noInternet,
 }

@@ -5,6 +5,7 @@ class ChatState with _$ChatState {
   const factory ChatState({
     @Default(Status.initial) Status status,
     @Default([]) List<MessageModel> messages,
-    String? errorMessage,
+    @Default('') String errorMessage,
+    @Default('') String apiKey,
   }) = _ChatState;
 }

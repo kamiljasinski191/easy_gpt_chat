@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ChatState {
   Status get status => throw _privateConstructorUsedError;
   List<MessageModel> get messages => throw _privateConstructorUsedError;
-  String? get errorMessage => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
+  String get apiKey => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatStateCopyWith<ChatState> get copyWith =>
@@ -30,7 +31,11 @@ abstract class $ChatStateCopyWith<$Res> {
   factory $ChatStateCopyWith(ChatState value, $Res Function(ChatState) then) =
       _$ChatStateCopyWithImpl<$Res, ChatState>;
   @useResult
-  $Res call({Status status, List<MessageModel> messages, String? errorMessage});
+  $Res call(
+      {Status status,
+      List<MessageModel> messages,
+      String errorMessage,
+      String apiKey});
 }
 
 /// @nodoc
@@ -48,7 +53,8 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
   $Res call({
     Object? status = null,
     Object? messages = null,
-    Object? errorMessage = freezed,
+    Object? errorMessage = null,
+    Object? apiKey = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -59,10 +65,14 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<MessageModel>,
-      errorMessage: freezed == errorMessage
+      errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      apiKey: null == apiKey
+          ? _value.apiKey
+          : apiKey // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -74,7 +84,11 @@ abstract class _$$_ChatStateCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
       __$$_ChatStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Status status, List<MessageModel> messages, String? errorMessage});
+  $Res call(
+      {Status status,
+      List<MessageModel> messages,
+      String errorMessage,
+      String apiKey});
 }
 
 /// @nodoc
@@ -90,7 +104,8 @@ class __$$_ChatStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? messages = null,
-    Object? errorMessage = freezed,
+    Object? errorMessage = null,
+    Object? apiKey = null,
   }) {
     return _then(_$_ChatState(
       status: null == status
@@ -101,10 +116,14 @@ class __$$_ChatStateCopyWithImpl<$Res>
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<MessageModel>,
-      errorMessage: freezed == errorMessage
+      errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      apiKey: null == apiKey
+          ? _value.apiKey
+          : apiKey // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -115,7 +134,8 @@ class _$_ChatState implements _ChatState {
   const _$_ChatState(
       {this.status = Status.initial,
       final List<MessageModel> messages = const [],
-      this.errorMessage})
+      this.errorMessage = '',
+      this.apiKey = ''})
       : _messages = messages;
 
   @override
@@ -131,11 +151,15 @@ class _$_ChatState implements _ChatState {
   }
 
   @override
-  final String? errorMessage;
+  @JsonKey()
+  final String errorMessage;
+  @override
+  @JsonKey()
+  final String apiKey;
 
   @override
   String toString() {
-    return 'ChatState(status: $status, messages: $messages, errorMessage: $errorMessage)';
+    return 'ChatState(status: $status, messages: $messages, errorMessage: $errorMessage, apiKey: $apiKey)';
   }
 
   @override
@@ -146,12 +170,13 @@ class _$_ChatState implements _ChatState {
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._messages, _messages) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.apiKey, apiKey) || other.apiKey == apiKey));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, status,
-      const DeepCollectionEquality().hash(_messages), errorMessage);
+      const DeepCollectionEquality().hash(_messages), errorMessage, apiKey);
 
   @JsonKey(ignore: true)
   @override
@@ -164,14 +189,17 @@ abstract class _ChatState implements ChatState {
   const factory _ChatState(
       {final Status status,
       final List<MessageModel> messages,
-      final String? errorMessage}) = _$_ChatState;
+      final String errorMessage,
+      final String apiKey}) = _$_ChatState;
 
   @override
   Status get status;
   @override
   List<MessageModel> get messages;
   @override
-  String? get errorMessage;
+  String get errorMessage;
+  @override
+  String get apiKey;
   @override
   @JsonKey(ignore: true)
   _$$_ChatStateCopyWith<_$_ChatState> get copyWith =>
