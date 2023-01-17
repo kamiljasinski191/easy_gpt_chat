@@ -6,20 +6,19 @@ import 'package:easy_gpt_chat/domains/models/message_model.dart';
 import 'package:easy_gpt_chat/domains/repositories/api_key_repository.dart';
 import 'package:easy_gpt_chat/domains/repositories/chat_gpt_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'chat_state.dart';
 part 'chat_cubit.freezed.dart';
 
 class ChatCubit extends Cubit<ChatState> {
-  ChatCubit(this._chatGptRepository, this._apiKeyRepository)
+  ChatCubit(this.chatGptRepository, this.apiKeyRepository)
       : super(const ChatState());
 
-  final ChatGptRepository _chatGptRepository;
-  final ApiKeyRepository _apiKeyRepository;
+  final ChatGptRepository chatGptRepository;
+  final ApiKeyRepository apiKeyRepository;
 
-  StreamSubscription? _streamSubscription;
+  StreamSubscription? streamSubscription;
 
   List<MessageModel> messages = [];
 
@@ -29,8 +28,8 @@ class ChatCubit extends Cubit<ChatState> {
         status: Status.initial,
       ),
     );
-    bool hasConnection = await InternetConnectionChecker().hasConnection;
-    final apiKey = await _apiKeyRepository.getSecuredApiKey();
+    bool hasConnection = await chatGptRepository.hasConnection();
+    final apiKey = await apiKeyRepository.getSecuredApiKey();
 
     if (apiKey == null || apiKey.length < 10) {
       emit(
@@ -71,7 +70,7 @@ class ChatCubit extends Cubit<ChatState> {
   Future<void> setChatApiKey({
     required String apiKey,
   }) async {
-    await _apiKeyRepository.setSecuredApiKey(apiKey: apiKey);
+    await apiKeyRepository.setSecuredApiKey(apiKey: apiKey);
     start();
   }
 
@@ -85,12 +84,20 @@ class ChatCubit extends Cubit<ChatState> {
         messages: messages,
       ),
     );
-    final apiKey = await _apiKeyRepository.getSecuredApiKey();
+    bool hasConnection = await chatGptRepository.hasConnection();
+    final apiKey = await apiKeyRepository.getSecuredApiKey();
     if (apiKey == null || apiKey.length < 10) {
       emit(
         state.copyWith(
           status: Status.error,
           errorMessage: 'noApiKey',
+        ),
+      );
+    } else if (!hasConnection) {
+      emit(
+        state.copyWith(
+          status: Status.error,
+          errorMessage: 'noInternet',
         ),
       );
     } else {
@@ -112,7 +119,7 @@ class ChatCubit extends Cubit<ChatState> {
         ),
       );
 
-      _streamSubscription = _chatGptRepository
+      streamSubscription = chatGptRepository
           .chatStreamConverted(
         text: message,
         token: apiKey,
@@ -156,7 +163,7 @@ class ChatCubit extends Cubit<ChatState> {
 
   @override
   Future<void> close() {
-    _streamSubscription?.cancel();
+    streamSubscription?.cancel();
     return super.close();
   }
 }

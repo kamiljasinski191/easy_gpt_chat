@@ -1,16 +1,17 @@
-# easy_gpt_chat
+# 😁EasyGPT Chat😁
 
-A new Flutter project.
+👍😁😎🙂
 
-## Getting Started
+Demo of popular AI 😎ChatGPT😎.
 
-This project is a starting point for a Flutter application.
+We can ask any question we want, and we get answer.👍
 
-A few resources to get you started if this is your first Flutter project:
+For any questions u can msg me.👍🙂
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![my giphy one](https://user-images.githubusercontent.com/110414614/212989974-20574446-7e10-4db6-90b2-e7a7147be4c8.gif)
+<img src="https://user-images.githubusercontent.com/110414614/212991060-b7ae149f-7729-464a-a4a2-1565933cd136.jpg" width="216" height="480">
+<img src="https://user-images.githubusercontent.com/110414614/212991447-3c14980c-1fc8-430e-b907-01a99801d5fd.jpg" width="216" height="480">
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Now we can easy communicate with ChatGPT via this app.
+It will be available on GooglePlay soon.
+
