@@ -101,9 +101,6 @@ void main() {
         ),
         expect: () => [
           const ChatState(
-            status: Status.loading,
-          ),
-          const ChatState(
             status: Status.error,
             errorMessage: 'noInternet',
           ),
@@ -154,9 +151,6 @@ void main() {
           sender: 'user',
         ),
         expect: () => [
-          const ChatState(
-            status: Status.loading,
-          ),
           const ChatState(
             status: Status.error,
             errorMessage: 'noApiKey',
@@ -235,54 +229,6 @@ void main() {
                 sender: 'bot',
               ),
             ],
-            errorMessage: '',
-            apiKey: '',
-          ),
-          const ChatState(
-            status: Status.loading,
-            messages: [
-              MessageModel(
-                message: 'lol3',
-                sender: 'god',
-              ),
-              MessageModel(
-                message: 'lol2',
-                sender: 'user',
-              ),
-              MessageModel(
-                message: 'lol1',
-                sender: 'bot',
-              ),
-              MessageModel(
-                message:
-                    'Welcome to EasyGPT chat. Please type your first question or problem.',
-                sender: 'bot',
-              ),
-            ],
-            errorMessage: '',
-            apiKey: '',
-          ),
-          const ChatState(
-            status: Status.succes,
-            messages: [
-              MessageModel(
-                message: 'lol3',
-                sender: 'god',
-              ),
-              MessageModel(
-                message: 'lol2',
-                sender: 'user',
-              ),
-              MessageModel(
-                message: 'lol1',
-                sender: 'bot',
-              ),
-              MessageModel(
-                message:
-                    'Welcome to EasyGPT chat. Please type your first question or problem.',
-                sender: 'bot',
-              ),
-            ],
           ),
         ],
       );
@@ -295,52 +241,6 @@ void main() {
           sender: 'user',
         ),
         expect: () => [
-          const ChatState(
-            status: Status.loading,
-            messages: [
-              MessageModel(
-                message: 'lol3',
-                sender: 'god',
-              ),
-              MessageModel(
-                message: 'lol2',
-                sender: 'user',
-              ),
-              MessageModel(
-                message: 'lol1',
-                sender: 'bot',
-              ),
-              MessageModel(
-                message: 'lol4',
-                sender: 'user',
-              ),
-            ],
-            errorMessage: '',
-            apiKey: '',
-          ),
-          const ChatState(
-            status: Status.succes,
-            messages: [
-              MessageModel(
-                message: 'lol3',
-                sender: 'god',
-              ),
-              MessageModel(
-                message: 'lol2',
-                sender: 'user',
-              ),
-              MessageModel(
-                message: 'lol1',
-                sender: 'bot',
-              ),
-              MessageModel(
-                message: 'lol4',
-                sender: 'user',
-              ),
-            ],
-            errorMessage: '',
-            apiKey: '',
-          ),
           const ChatState(
             status: Status.loading,
             messages: [
