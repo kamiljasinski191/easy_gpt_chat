@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
+import 'package:dio/dio.dart';
 
 class ChatGptRemoteDataSource {
   ChatGptRemoteDataSource();
@@ -18,11 +19,15 @@ class ChatGptRemoteDataSource {
     final openAI = ChatGPT.instance.builder(
       token,
       baseOption: HttpSetup(
-        connectTimeout: 50000,
+        connectTimeout: 5000,
         receiveTimeout: 50000,
       ),
     );
-
-    return openAI.onCompleteStream(request: request);
+    try {
+      final myStream = openAI.onCompleteText(request: request).asStream();
+      return myStream;
+    } on DioError catch (_) {
+      rethrow;
+    }
   }
 }

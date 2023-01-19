@@ -22,8 +22,8 @@ class ChatGptRepository {
     );
   }
 
-  Future<bool> hasConnection()async {
-   final hasConnection =  await InternetConnectionChecker().hasConnection;
-   return hasConnection;
+  Future<bool> hasConnection() async {
+    final hasConnection = await InternetConnectionChecker().hasConnection;
+    return hasConnection;
   }
 }

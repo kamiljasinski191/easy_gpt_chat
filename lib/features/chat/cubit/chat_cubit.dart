@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/domains/models/message_model.dart';
 import 'package:easy_gpt_chat/domains/repositories/api_key_repository.dart';
@@ -78,12 +79,6 @@ class ChatCubit extends Cubit<ChatState> {
     required String message,
     required String sender,
   }) async {
-    emit(
-      state.copyWith(
-        status: Status.loading,
-        messages: messages,
-      ),
-    );
     bool hasConnection = await chatGptRepository.hasConnection();
     final apiKey = await apiKeyRepository.getSecuredApiKey();
     if (apiKey == null || apiKey.length < 10) {
@@ -106,12 +101,6 @@ class ChatCubit extends Cubit<ChatState> {
         sender: sender,
       );
       messages.insert(0, requestMessage);
-      emit(
-        state.copyWith(
-          status: Status.succes,
-          messages: messages,
-        ),
-      );
       emit(
         state.copyWith(
           status: Status.loading,
@@ -142,12 +131,24 @@ class ChatCubit extends Cubit<ChatState> {
         },
       )..onError(
           (error) {
-            emit(
-              state.copyWith(
-                status: Status.error,
-                errorMessage: error.toString(),
-              ),
-            );
+            if (error is DioError) {
+              if (error.response != null) {
+                emit(
+                  state.copyWith(
+                    status: Status.error,
+                    errorMessage: error.response?.data['error']['message'],
+                  ),
+                );
+              } else {
+                print(error.message);
+                emit(
+                  state.copyWith(
+                    status: Status.error,
+                    errorMessage: error.message,
+                  ),
+                );
+              }
+            }
           },
         );
     }
