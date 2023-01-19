@@ -19,8 +19,8 @@ class ChatGptRemoteDataSource {
     final openAI = ChatGPT.instance.builder(
       token,
       baseOption: HttpSetup(
-        connectTimeout: 5000,
-        receiveTimeout: 50000,
+        connectTimeout: 20000,
+        receiveTimeout: 20000,
       ),
     );
     try {
@@ -29,5 +29,18 @@ class ChatGptRemoteDataSource {
     } on DioError catch (_) {
       rethrow;
     }
+  }
+
+  Future<void> setToken({
+    required String token,
+  }) async {
+    final openAI = ChatGPT.instance.builder(
+      token,
+      baseOption: HttpSetup(
+        connectTimeout: 20000,
+        receiveTimeout: 20000,
+      ),
+    );
+    return openAI.setToken(token);
   }
 }

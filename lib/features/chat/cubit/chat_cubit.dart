@@ -47,12 +47,7 @@ class ChatCubit extends Cubit<ChatState> {
         ),
       );
     } else {
-      //Walkover to initialize token. And give nice welcome message.
-      await sendMessage(
-        message:
-            'Welcome to EasyGPT chat. Please type your first question or problem.',
-        sender: 'bot',
-      );
+      await chatGptRepository.setToken(token: apiKey);
       emit(
         state.copyWith(
           status: Status.loading,

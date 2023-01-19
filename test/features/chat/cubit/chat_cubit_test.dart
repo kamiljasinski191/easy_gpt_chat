@@ -163,18 +163,29 @@ void main() {
   group(
     'all data provided',
     () {
-      setUp(() {
-        when(
-          () => mockApiKeyRepository.getSecuredApiKey(),
-        ).thenAnswer(
-          (_) async => 'testRandomApiKey',
-        );
-        when(
-          () => mockChatGptRepository.hasConnection(),
-        ).thenAnswer(
-          (_) async => true,
-        );
-      });
+      setUp(
+        () {
+          when(
+            () => mockApiKeyRepository.getSecuredApiKey(),
+          ).thenAnswer(
+            (_) async => 'testRandomApiKey',
+          );
+          when(
+            () => mockChatGptRepository.hasConnection(),
+          ).thenAnswer(
+            (_) async => true,
+          );
+          when(
+            () => mockChatGptRepository.setToken(
+              token: any(
+                named: 'token',
+              ),
+            ),
+          ).thenAnswer(
+            (_) async => {},
+          );
+        },
+      );
       blocTest<ChatCubit, ChatState>(
         '''emits state succes with expected [MessageModel]s when 
         all data provided at start.''',
@@ -186,49 +197,13 @@ void main() {
           ),
           const ChatState(
             status: Status.loading,
-            messages: [
-              MessageModel(
-                message: 'lol3',
-                sender: 'god',
-              ),
-              MessageModel(
-                message: 'lol2',
-                sender: 'user',
-              ),
-              MessageModel(
-                message: 'lol1',
-                sender: 'bot',
-              ),
-              MessageModel(
-                message:
-                    'Welcome to EasyGPT chat. Please type your first question or problem.',
-                sender: 'bot',
-              ),
-            ],
+            messages: [],
             errorMessage: '',
             apiKey: '',
           ),
           const ChatState(
             status: Status.succes,
-            messages: [
-              MessageModel(
-                message: 'lol3',
-                sender: 'god',
-              ),
-              MessageModel(
-                message: 'lol2',
-                sender: 'user',
-              ),
-              MessageModel(
-                message: 'lol1',
-                sender: 'bot',
-              ),
-              MessageModel(
-                message:
-                    'Welcome to EasyGPT chat. Please type your first question or problem.',
-                sender: 'bot',
-              ),
-            ],
+            messages: [],
           ),
         ],
       );

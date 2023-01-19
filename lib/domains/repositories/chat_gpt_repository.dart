@@ -22,6 +22,12 @@ class ChatGptRepository {
     );
   }
 
+  Future<void> setToken({
+    required String token,
+  }) async {
+    return chatGptRemoteDataSource.setToken(token: token);
+  }
+
   Future<bool> hasConnection() async {
     final hasConnection = await InternetConnectionChecker().hasConnection;
     return hasConnection;
