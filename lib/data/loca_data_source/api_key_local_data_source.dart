@@ -17,4 +17,9 @@ class ApiKeyLocalDataSource {
     final storage = FlutterSecureStorage(aOptions: getAndroidOptions());
     await storage.write(key: 'apiKey', value: apiKey);
   }
+
+  Future<void> deleteSecuredApiKey() async {
+    final storage = FlutterSecureStorage(aOptions: getAndroidOptions());
+    await storage.delete(key: 'apiKey');
+  }
 }

@@ -68,13 +68,6 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
-  Future<void> setChatApiKey({
-    required String apiKey,
-  }) async {
-    await apiKeyRepository.setSecuredApiKey(apiKey: apiKey);
-    start();
-  }
-
   Future<void> sendMessage({
     required String message,
     required String sender,
@@ -152,6 +145,18 @@ class ChatCubit extends Cubit<ChatState> {
           },
         );
     }
+  }
+
+  Future<void> setChatApiKey({
+    required String apiKey,
+  }) async {
+    await apiKeyRepository.setSecuredApiKey(apiKey: apiKey);
+    start();
+  }
+
+  Future<void> deleteChatApiKey() async {
+    await apiKeyRepository.deleteSecuredApiKey();
+    start();
   }
 
   Future<void> launchOpenAiUrl() async {

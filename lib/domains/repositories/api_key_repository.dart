@@ -11,4 +11,8 @@ class ApiKeyRepository {
   Future<void> setSecuredApiKey({required String apiKey}) async {
     await apiKeyLocalDataSource.setSecuredApiKey(apiKey: apiKey);
   }
+
+  Future<void> deleteSecuredApiKey() async {
+    return apiKeyLocalDataSource.deleteSecuredApiKey();
+  }
 }

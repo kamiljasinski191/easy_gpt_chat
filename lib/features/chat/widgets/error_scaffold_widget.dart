@@ -109,6 +109,39 @@ class ErrorScaffoldWidget extends StatelessWidget {
               ),
             ),
           );
+        } else if (state.errorMessage.length > 30) {
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text(
+                'EasyGPT Chat',
+              ),
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'An error has ocured. Reload app and try again',
+                  ),
+                  Text(
+                    state.errorMessage,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<ChatCubit>().deleteChatApiKey();
+                    },
+                    child: const Text(
+                      'Set New ApiKey',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
         } else {
           return Scaffold(
             appBar: AppBar(
