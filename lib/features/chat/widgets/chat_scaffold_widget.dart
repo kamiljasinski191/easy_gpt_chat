@@ -1,6 +1,7 @@
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/domains/models/message_model.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
+import 'package:easy_gpt_chat/features/chat/widgets/alert_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -26,6 +27,41 @@ class ChatScaffoldWidget extends StatelessWidget {
             title: const Text(
               'EasyGPT Chat',
             ),
+            actions: [
+              PopupMenuButton(
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            showResetApiKeyDialog(context);
+                          },
+                          child: const Text('Reset ApiKey'),
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            showAboutAppDialog(context);
+                          },
+                          child: const Text('About App'),
+                        ),
+                      ),
+                    ),
+                  ];
+                },
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+            ],
           ),
           body: Column(
             children: [

@@ -32,33 +32,23 @@ class _ChatViewState extends State<ChatView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ChatCubit(
-        ChatGptRepository(
-          ChatGptRemoteDataSource(),
-        ),
-        ApiKeyRepository(
-          ApiKeyLocalDataSource(),
-        ),
-      )..start(),
-      child: BlocBuilder<ChatCubit, ChatState>(
-        builder: (context, state) {
-          final messages = state.messages;
-          final status = state.status;
-          switch (status) {
-            case Status.initial:
-              return const InitialScaffoldWidget();
-            case Status.error:
-              return ErrorScaffoldWidget(
-                textEditingController: _textEditingController,
-              );
-            default:
-              return ChatScaffoldWidget(
-                  messages: messages,
-                  textEditingController: _textEditingController);
-          }
-        },
-      ),
+    return BlocBuilder<ChatCubit, ChatState>(
+      builder: (context, state) {
+        final messages = state.messages;
+        final status = state.status;
+        switch (status) {
+          case Status.initial:
+            return const InitialScaffoldWidget();
+          case Status.error:
+            return ErrorScaffoldWidget(
+              textEditingController: _textEditingController,
+            );
+          default:
+            return ChatScaffoldWidget(
+                messages: messages,
+                textEditingController: _textEditingController);
+        }
+      },
     );
   }
 }
