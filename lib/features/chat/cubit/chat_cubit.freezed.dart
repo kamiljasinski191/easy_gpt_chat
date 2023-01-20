@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'chat_cubit.dart';
 
@@ -19,6 +19,7 @@ mixin _$ChatState {
   Status get status => throw _privateConstructorUsedError;
   List<MessageModel> get messages => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
+  String? get errorCode => throw _privateConstructorUsedError;
   String get apiKey => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,6 +36,7 @@ abstract class $ChatStateCopyWith<$Res> {
       {Status status,
       List<MessageModel> messages,
       String errorMessage,
+      String? errorCode,
       String apiKey});
 }
 
@@ -54,6 +56,7 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
     Object? status = null,
     Object? messages = null,
     Object? errorMessage = null,
+    Object? errorCode = freezed,
     Object? apiKey = null,
   }) {
     return _then(_value.copyWith(
@@ -69,6 +72,10 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      errorCode: freezed == errorCode
+          ? _value.errorCode
+          : errorCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       apiKey: null == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -88,6 +95,7 @@ abstract class _$$_ChatStateCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
       {Status status,
       List<MessageModel> messages,
       String errorMessage,
+      String? errorCode,
       String apiKey});
 }
 
@@ -105,6 +113,7 @@ class __$$_ChatStateCopyWithImpl<$Res>
     Object? status = null,
     Object? messages = null,
     Object? errorMessage = null,
+    Object? errorCode = freezed,
     Object? apiKey = null,
   }) {
     return _then(_$_ChatState(
@@ -120,6 +129,10 @@ class __$$_ChatStateCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      errorCode: freezed == errorCode
+          ? _value.errorCode
+          : errorCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       apiKey: null == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -135,6 +148,7 @@ class _$_ChatState implements _ChatState {
       {this.status = Status.initial,
       final List<MessageModel> messages = const [],
       this.errorMessage = '',
+      this.errorCode,
       this.apiKey = ''})
       : _messages = messages;
 
@@ -145,7 +159,6 @@ class _$_ChatState implements _ChatState {
   @override
   @JsonKey()
   List<MessageModel> get messages {
-    if (_messages is EqualUnmodifiableListView) return _messages;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_messages);
   }
@@ -154,12 +167,14 @@ class _$_ChatState implements _ChatState {
   @JsonKey()
   final String errorMessage;
   @override
+  final String? errorCode;
+  @override
   @JsonKey()
   final String apiKey;
 
   @override
   String toString() {
-    return 'ChatState(status: $status, messages: $messages, errorMessage: $errorMessage, apiKey: $apiKey)';
+    return 'ChatState(status: $status, messages: $messages, errorMessage: $errorMessage, errorCode: $errorCode, apiKey: $apiKey)';
   }
 
   @override
@@ -171,12 +186,19 @@ class _$_ChatState implements _ChatState {
             const DeepCollectionEquality().equals(other._messages, _messages) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
+            (identical(other.errorCode, errorCode) ||
+                other.errorCode == errorCode) &&
             (identical(other.apiKey, apiKey) || other.apiKey == apiKey));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status,
-      const DeepCollectionEquality().hash(_messages), errorMessage, apiKey);
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      const DeepCollectionEquality().hash(_messages),
+      errorMessage,
+      errorCode,
+      apiKey);
 
   @JsonKey(ignore: true)
   @override
@@ -190,6 +212,7 @@ abstract class _ChatState implements ChatState {
       {final Status status,
       final List<MessageModel> messages,
       final String errorMessage,
+      final String? errorCode,
       final String apiKey}) = _$_ChatState;
 
   @override
@@ -198,6 +221,8 @@ abstract class _ChatState implements ChatState {
   List<MessageModel> get messages;
   @override
   String get errorMessage;
+  @override
+  String? get errorCode;
   @override
   String get apiKey;
   @override

@@ -24,6 +24,7 @@ class ChatCubit extends Cubit<ChatState> {
   List<MessageModel> messages = [];
 
   Future<void> start() async {
+    messages.clear();
     emit(
       state.copyWith(
         status: Status.initial,
@@ -121,12 +122,12 @@ class ChatCubit extends Cubit<ChatState> {
           (error) {
             if (error is DioError) {
               if (error.response != null) {
-                emit(
-                  state.copyWith(
-                    status: Status.error,
-                    errorMessage: error.response?.data['error']['message'],
-                  ),
-                );
+                emit(state.copyWith(
+                  status: Status.error,
+                  errorMessage: error.response?.data['error']['message'],
+                  errorCode: error.response?.data['error']['code'],
+                ));
+                print(error.response?.data['error']['code']);
               } else {
                 print(error.message);
                 emit(

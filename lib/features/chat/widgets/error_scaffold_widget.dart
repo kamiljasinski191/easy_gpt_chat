@@ -76,40 +76,43 @@ class ErrorScaffoldWidget extends StatelessWidget {
               ),
             ),
             body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Image(
-                    image: AssetImage('assets/images/white_no_wifi_icon.png'),
-                  ),
-                  const Text(
-                    'No internet connection.',
-                    style: TextStyle(
-                      fontSize: 18,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Image(
+                      image: AssetImage('assets/images/white_no_wifi_icon.png'),
                     ),
-                  ),
-                  const Text(
-                    ' Check your connection and try again.',
-                    style: TextStyle(
-                      fontSize: 18,
+                    const Text(
+                      'No internet connection.',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<ChatCubit>().start();
-                    },
-                    child: const Text(
-                      'Reload',
+                    const Text(
+                      ' Check your connection and try again.',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<ChatCubit>().start();
+                      },
+                      child: const Text(
+                        'Reload',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
-        } else if (state.errorMessage.length > 30) {
+        } else if (state.errorCode == 'invalid_api_key') {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -118,27 +121,30 @@ class ErrorScaffoldWidget extends StatelessWidget {
               ),
             ),
             body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'An error has ocured. Reload app and try again',
-                  ),
-                  Text(
-                    state.errorMessage,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<ChatCubit>().deleteChatApiKey();
-                    },
-                    child: const Text(
-                      'Set New ApiKey',
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'An error has ocured. Reload app and try again',
                     ),
-                  ),
-                ],
+                    Text(
+                      state.errorMessage,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<ChatCubit>().deleteChatApiKey();
+                      },
+                      child: const Text(
+                        'Set New ApiKey',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -151,27 +157,30 @@ class ErrorScaffoldWidget extends StatelessWidget {
               ),
             ),
             body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'An error has ocured. Reload app and try again',
-                  ),
-                  Text(
-                    state.errorMessage,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<ChatCubit>().start();
-                    },
-                    child: const Text(
-                      'Reload',
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'An error has ocured. Reload app and try again',
                     ),
-                  ),
-                ],
+                    Text(
+                      state.errorMessage,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<ChatCubit>().start();
+                      },
+                      child: const Text(
+                        'Reload',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
