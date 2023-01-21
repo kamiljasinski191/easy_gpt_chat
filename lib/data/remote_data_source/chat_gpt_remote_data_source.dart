@@ -13,14 +13,14 @@ class ChatGptRemoteDataSource {
     final request = CompleteReq(
       prompt: text,
       model: kTranslateModelV3,
-      max_tokens: 500,
+      max_tokens: 4000,
     );
 
     final openAI = ChatGPT.instance.builder(
       token,
       baseOption: HttpSetup(
-        connectTimeout: 20000,
-        receiveTimeout: 20000,
+        connectTimeout: 10000,
+        receiveTimeout: 50000,
       ),
     );
     try {
