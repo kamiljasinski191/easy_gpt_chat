@@ -127,9 +127,7 @@ class ChatCubit extends Cubit<ChatState> {
                   errorMessage: error.response?.data['error']['message'],
                   errorCode: error.response?.data['error']['code'],
                 ));
-                print(error.response?.data['error']['code']);
               } else {
-                print(error.message);
                 emit(
                   state.copyWith(
                     status: Status.error,

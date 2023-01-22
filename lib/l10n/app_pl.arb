@@ -1,0 +1,22 @@
+{
+    "initializingApp": "Inicjowanie apki. Proszę czekać...",
+    "itIsDemo": "To jest demo ChatGPT z oficjalnego API,",
+    "andYouNeed": "i potrzebujesz oficjalnego KluczApi z openAi.com.",
+    "pleaseVisit":"Proszę odwiedź, by zdobyć swój Klucz:",
+    "setKey":"Ustaw swój KluczApi",
+    "noInternet": "Brak połączenia z internetem.",
+    "checkInternet": "Sprawdź połączenie i spróbuj ponownie.",
+    "reload":"Odśwież",
+    "anError": "Wystąpił błąd.",
+    "apiKeyInvalid": "KluczApi jest niepoprawny.",
+    "setNewKey": "Ustaw nowy KluczApi",
+    "reloadAndTryAgain": "Odśwież i spróbuj ponownie.",
+    "sendMessage": "Wyślij wiadomość",
+    "aboutApp": "O Aplikacji",
+    "resetApiKey": "Resetowanie KluczaApi",
+    "aboutAppContent": "EasyGPT Chat to prosta aplikacja, która wykorzystuje oficjalne API OpenAI.Niestety jest to tylko wersja demonstracyjna, więc czat ma ograniczenia.Na przykład nie wie, jaka jest aktualna data.",
+    "areYouSure":"Czy jesteś pewny/a że chcesz zresetować KluczApi?",
+    "yes":"Tak",
+    "no":"Nie!",
+    "ok": "OK"
+}

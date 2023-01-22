@@ -1,6 +1,7 @@
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ErrorScaffoldWidget extends StatelessWidget {
   const ErrorScaffoldWidget({
@@ -27,9 +28,9 @@ class ErrorScaffoldWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("It's demo of ChatGPT from official API,"),
-                    const Text("and u need official ApiKey from openAi.com."),
-                    const Text("Please visit, to get your Key:"),
+                    Text(AppLocalizations.of(context)!.itIsDemo),
+                    Text(AppLocalizations.of(context)!.andYouNeed),
+                    Text(AppLocalizations.of(context)!.pleaseVisit),
                     TextButton(
                       onPressed: () {
                         context.read<ChatCubit>().launchOpenAiUrl();
@@ -49,8 +50,8 @@ class ErrorScaffoldWidget extends StatelessWidget {
                             _textEditingController.clear();
                           },
                           controller: _textEditingController,
-                          decoration: const InputDecoration.collapsed(
-                              hintText: 'Set your ApiKey'),
+                          decoration: InputDecoration.collapsed(
+                              hintText: AppLocalizations.of(context)!.setKey),
                         )),
                         IconButton(
                           onPressed: () {
@@ -84,15 +85,15 @@ class ErrorScaffoldWidget extends StatelessWidget {
                     const Image(
                       image: AssetImage('assets/images/white_no_wifi_icon.png'),
                     ),
-                    const Text(
-                      'No internet connection.',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.noInternet,
+                      style: const TextStyle(
                         fontSize: 18,
                       ),
                     ),
-                    const Text(
-                      ' Check your connection and try again.',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.checkInternet,
+                      style: const TextStyle(
                         fontSize: 18,
                       ),
                     ),
@@ -103,8 +104,8 @@ class ErrorScaffoldWidget extends StatelessWidget {
                       onPressed: () {
                         context.read<ChatCubit>().start();
                       },
-                      child: const Text(
-                        'Reload',
+                      child: Text(
+                        AppLocalizations.of(context)!.reload,
                       ),
                     ),
                   ],
@@ -126,8 +127,11 @@ class ErrorScaffoldWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'An error has ocured. Reload app and try again',
+                    Text(
+                      '${AppLocalizations.of(context)!.anError} ${AppLocalizations.of(context)!.apiKeyInvalid}',
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Text(
                       state.errorMessage,
@@ -139,8 +143,8 @@ class ErrorScaffoldWidget extends StatelessWidget {
                       onPressed: () {
                         context.read<ChatCubit>().deleteChatApiKey();
                       },
-                      child: const Text(
-                        'Set New ApiKey',
+                      child: Text(
+                        AppLocalizations.of(context)!.setNewKey,
                       ),
                     ),
                   ],
@@ -162,8 +166,8 @@ class ErrorScaffoldWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'An error has ocured. Reload app and try again',
+                    Text(
+                      '${AppLocalizations.of(context)!.anError} ${AppLocalizations.of(context)!.reloadAndTryAgain}',
                     ),
                     Text(
                       state.errorMessage,
@@ -175,8 +179,8 @@ class ErrorScaffoldWidget extends StatelessWidget {
                       onPressed: () {
                         context.read<ChatCubit>().start();
                       },
-                      child: const Text(
-                        'Reload',
+                      child: Text(
+                        AppLocalizations.of(context)!.reload,
                       ),
                     ),
                   ],

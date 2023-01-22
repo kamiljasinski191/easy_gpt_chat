@@ -5,6 +5,7 @@ import 'package:easy_gpt_chat/features/chat/widgets/alert_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatScaffoldWidget extends StatelessWidget {
   const ChatScaffoldWidget({
@@ -39,7 +40,8 @@ class ChatScaffoldWidget extends StatelessWidget {
                             Navigator.of(context).pop();
                             showResetApiKeyDialog(context);
                           },
-                          child: const Text('Reset ApiKey'),
+                          child:
+                              Text(AppLocalizations.of(context)!.resetApiKey),
                         ),
                       ),
                     ),
@@ -51,7 +53,7 @@ class ChatScaffoldWidget extends StatelessWidget {
                             Navigator.of(context).pop();
                             showAboutAppDialog(context);
                           },
-                          child: const Text('About App'),
+                          child: Text(AppLocalizations.of(context)!.aboutApp),
                         ),
                       ),
                     ),
@@ -95,8 +97,9 @@ class ChatScaffoldWidget extends StatelessWidget {
                             _textEditingController.clear();
                           },
                           controller: _textEditingController,
-                          decoration: const InputDecoration.collapsed(
-                              hintText: 'Send a message'),
+                          decoration: InputDecoration.collapsed(
+                            hintText: AppLocalizations.of(context)!.sendMessage,
+                          ),
                         ),
                       ),
                       IconButton(
@@ -139,6 +142,7 @@ class LoadingContainerWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
+                  height: 70,
                   decoration: BoxDecoration(
                     color: Colors.green.withAlpha(80),
                     borderRadius: BorderRadius.circular(35),
@@ -146,10 +150,10 @@ class LoadingContainerWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: JumpingDotsProgressIndicator(
-                      dotSpacing: 2,
-                      milliseconds: 300,
-                      numberOfDots: 4,
-                      fontSize: 48,
+                      dotSpacing: 1.5,
+                      milliseconds: 100,
+                      numberOfDots: 5,
+                      fontSize: 36,
                       color: Colors.white,
                     ),
                   ),

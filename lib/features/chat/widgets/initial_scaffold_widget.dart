@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InitialScaffoldWidget extends StatelessWidget {
   const InitialScaffoldWidget({
@@ -17,9 +18,9 @@ class InitialScaffoldWidget extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('Initializing app. Please wait...'),
-            SizedBox(
+          children: [
+            Text(AppLocalizations.of(context)!.initializingApp),
+            const SizedBox(
               height: 25,
             ),
           ],

@@ -1,0 +1,22 @@
+{
+    "initializingApp": "Initializing app. Please wait...",
+    "itIsDemo": "It's demo of ChatGPT from official API,",
+    "andYouNeed": "and u need official ApiKey from openAi.com.",
+    "pleaseVisit":"Please visit, to get your Key:",
+    "setKey":"Set your ApiKey",
+    "noInternet": "No internet connection.",
+    "checkInternet": "Check your connection and try again.",
+    "reload":"Reload",
+    "anError": "An error has ocured.",
+    "apiKeyInvalid": "ApiKey is invalid.",
+    "setNewKey": "Set New ApiKey",
+    "reloadAndTryAgain": "Reload app and try again.",
+    "sendMessage": "Send a message",
+    "aboutApp": "About App",
+    "resetApiKey": "Reset ApiKey",
+    "aboutAppContent": "EasyGPT Chat is a simple application that uses the official OpenAI API.Unfortunately, it is just a demo, so the chat has limitations.For example, it does not know the current date.",
+    "areYouSure":"Are you sure you want to reset your API key?",
+    "yes":"Yes",
+    "no":"No!",
+    "ok": "OK"
+}
