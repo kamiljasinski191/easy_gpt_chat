@@ -4,25 +4,36 @@ import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:easy_gpt_chat/features/chat/widgets/alert_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatScaffoldWidget extends StatelessWidget {
-  const ChatScaffoldWidget({
-    Key? key,
-    required this.messages,
-    required TextEditingController textEditingController,
-  })  : _textEditingController = textEditingController,
+  const ChatScaffoldWidget(
+      {Key? key,
+      required this.messages,
+      required TextEditingController textEditingController,
+      required this.ad})
+      : _textEditingController = textEditingController,
         super(key: key);
 
   final List<MessageModel> messages;
   final TextEditingController _textEditingController;
-
+  final BannerAd? ad;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
         return Scaffold(
+          bottomNavigationBar: ad != null
+              ? SizedBox(
+                  height: ad!.size.height.toDouble(),
+                  width: ad!.size.width.toDouble(),
+                  child: AdWidget(
+                    ad: ad!,
+                  ),
+                )
+              : null,
           appBar: AppBar(
             centerTitle: true,
             title: const Text(
@@ -88,13 +99,13 @@ class ChatScaffoldWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextField(
-                          autofocus: true,
                           onSubmitted: (value) {
                             context.read<ChatCubit>().sendMessage(
                                   message: value,
                                   sender: 'user',
                                 );
                             _textEditingController.clear();
+                            FocusManager.instance.primaryFocus?.unfocus();
                           },
                           controller: _textEditingController,
                           decoration: InputDecoration.collapsed(
@@ -109,6 +120,7 @@ class ChatScaffoldWidget extends StatelessWidget {
                                 sender: 'user',
                               );
                           _textEditingController.clear();
+                          FocusManager.instance.primaryFocus?.unfocus();
                         },
                         icon: const Icon(Icons.send),
                       ),
