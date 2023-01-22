@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:dio/dio.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class ChatGptRemoteDataSource {
   ChatGptRemoteDataSource();
@@ -19,8 +20,8 @@ class ChatGptRemoteDataSource {
     final openAI = ChatGPT.instance.builder(
       token,
       baseOption: HttpSetup(
-        connectTimeout: 10000,
-        receiveTimeout: 50000,
+        connectTimeout: 20000,
+        receiveTimeout: 40000,
       ),
     );
     try {
@@ -42,5 +43,10 @@ class ChatGptRemoteDataSource {
       ),
     );
     return openAI.setToken(token);
+  }
+
+  Future<bool> hasConnection() async {
+    final hasConnection = await InternetConnectionChecker().hasConnection;
+    return hasConnection;
   }
 }
