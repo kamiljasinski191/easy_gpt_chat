@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:easy_gpt_chat/data/remote_data_source/chat_gpt_remote_data_source.dart';

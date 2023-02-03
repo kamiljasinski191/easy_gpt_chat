@@ -13,7 +13,6 @@ class ChatGptRepository {
   }) {
     return chatGptRemoteDataSource.chatStream(text: text, token: token).map(
       (response) {
-        print('hjagkhlgdawljkhgadkhjgadhjkdabhljkadb $response');
         return MessageModel(
           message: response.choices[0].text,
           sender: 'bot',
