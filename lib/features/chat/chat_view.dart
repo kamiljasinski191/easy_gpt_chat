@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_gpt_chat/ad_helper.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
@@ -23,21 +25,23 @@ class _ChatViewState extends State<ChatView> {
   @override
   void initState() {
     super.initState();
-    BannerAd(
-      adUnitId: AdHelper.bannerAdUnitId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        onAdLoaded: (ad) {
-          setState(() {
-            _bannerAd = ad as BannerAd;
-          });
-        },
-        onAdFailedToLoad: (ad, err) {
-          ad.dispose();
-        },
-      ),
-    ).load();
+    if (Platform.isAndroid) {
+      BannerAd(
+        adUnitId: AdHelper.bannerAdUnitId,
+        request: const AdRequest(),
+        size: AdSize.banner,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              _bannerAd = ad as BannerAd;
+            });
+          },
+          onAdFailedToLoad: (ad, err) {
+            ad.dispose();
+          },
+        ),
+      ).load();
+    }
   }
 
   @override
@@ -62,9 +66,10 @@ class _ChatViewState extends State<ChatView> {
             );
           default:
             return ChatScaffoldWidget(
-                messages: messages,
-                textEditingController: _textEditingController,
-                ad: _bannerAd,);
+              messages: messages,
+              textEditingController: _textEditingController,
+              ad: _bannerAd,
+            );
         }
       },
     );

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'package:easy_gpt_chat/app/core/configure_dependencies.dart';
 import 'package:easy_gpt_chat/data/loca_data_source/api_key_local_data_source.dart';
 import 'package:easy_gpt_chat/data/remote_data_source/chat_gpt_remote_data_source.dart';
 import 'package:easy_gpt_chat/domain/repositories/api_key_repository.dart';
@@ -9,6 +10,7 @@ import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({
@@ -17,20 +19,12 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appLocalizations;
-    return BlocProvider(
-      create: (context) => ChatCubit(
-        ChatGptRepository(
-          ChatGptRemoteDataSource(),
-        ),
-        ApiKeyRepository(
-          ApiKeyLocalDataSource(),
-        ),
-      )..start(),
+    return BlocProvider<ChatCubit>(
+      create: (context) => getIt()..start(),
       child: MaterialApp(
         title: 'EasyGPTchat',
-        localizationsDelegates: [
-          appLocalizations.delegate,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

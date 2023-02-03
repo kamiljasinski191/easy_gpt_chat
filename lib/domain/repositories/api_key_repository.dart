@@ -1,5 +1,7 @@
 import 'package:easy_gpt_chat/data/loca_data_source/api_key_local_data_source.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class ApiKeyRepository {
   ApiKeyRepository(this.apiKeyLocalDataSource);
   final ApiKeyLocalDataSource apiKeyLocalDataSource;

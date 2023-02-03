@@ -7,11 +7,13 @@ import 'package:easy_gpt_chat/domain/models/message_model.dart';
 import 'package:easy_gpt_chat/domain/repositories/api_key_repository.dart';
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'chat_state.dart';
 part 'chat_cubit.freezed.dart';
 
+@injectable
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit(this.chatGptRepository, this.apiKeyRepository)
       : super(const ChatState());

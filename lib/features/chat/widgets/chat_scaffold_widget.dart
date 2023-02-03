@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:io';
 
 class ChatScaffoldWidget extends StatelessWidget {
   const ChatScaffoldWidget(
@@ -26,7 +27,7 @@ class ChatScaffoldWidget extends StatelessWidget {
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
         return Scaffold(
-          bottomNavigationBar: ad != null
+          bottomNavigationBar: ad != null && Platform.isAndroid
               ? SizedBox(
                   height: ad!.size.height.toDouble(),
                   width: ad!.size.width.toDouble(),
