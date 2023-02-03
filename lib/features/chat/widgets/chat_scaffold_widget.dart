@@ -1,7 +1,8 @@
 import 'package:easy_gpt_chat/app/core/enums.dart';
+import 'package:easy_gpt_chat/app/dialogs/about_chat_dialog.dart';
+import 'package:easy_gpt_chat/app/dialogs/reset_api_dialog.dart';
 import 'package:easy_gpt_chat/domains/models/message_model.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
-import 'package:easy_gpt_chat/features/chat/widgets/alert_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -49,7 +50,10 @@ class ChatScaffoldWidget extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            showResetApiKeyDialog(context);
+                            showDialog(
+                              context: context,
+                              builder: (context) => const AboutChatDialog(),
+                            );
                           },
                           child:
                               Text(AppLocalizations.of(context)!.resetApiKey),
@@ -62,7 +66,10 @@ class ChatScaffoldWidget extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            showAboutAppDialog(context);
+                            showDialog(
+                              context: context,
+                              builder: (context) => const ResetApiDialog(),
+                            );
                           },
                           child: Text(AppLocalizations.of(context)!.aboutApp),
                         ),
