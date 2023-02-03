@@ -35,7 +35,7 @@ void main() {
     () async {
       verifyNever(
         () => mockApiKeyLocalDataSource.getSecuredApiKey(),
-      ).called(0);
+      );
       await sut.getSecuredApiKey();
       verify(
         () => mockApiKeyLocalDataSource.getSecuredApiKey(),
@@ -55,7 +55,7 @@ void main() {
       verifyNever(
         () => mockApiKeyLocalDataSource.setSecuredApiKey(
             apiKey: any(named: 'apiKey')),
-      ).called(0);
+      );
       await sut.setSecuredApiKey(apiKey: 'testString');
       verify(
         () => mockApiKeyLocalDataSource.setSecuredApiKey(
@@ -68,7 +68,7 @@ void main() {
     () async {
       verifyNever(
         () => mockApiKeyLocalDataSource.deleteSecuredApiKey(),
-      ).called(0);
+      );
       await sut.deleteSecuredApiKey();
       verify(
         () => mockApiKeyLocalDataSource.deleteSecuredApiKey(),
