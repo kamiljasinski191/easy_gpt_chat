@@ -1,5 +1,5 @@
 import 'package:easy_gpt_chat/data/loca_data_source/api_key_local_data_source.dart';
-import 'package:easy_gpt_chat/domains/repositories/api_key_repository.dart';
+import 'package:easy_gpt_chat/domain/repositories/api_key_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

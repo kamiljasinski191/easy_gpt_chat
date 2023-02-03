@@ -1,7 +1,7 @@
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/app/dialogs/about_chat_dialog.dart';
 import 'package:easy_gpt_chat/app/dialogs/reset_api_dialog.dart';
-import 'package:easy_gpt_chat/domains/models/message_model.dart';
+import 'package:easy_gpt_chat/domain/models/message_model.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

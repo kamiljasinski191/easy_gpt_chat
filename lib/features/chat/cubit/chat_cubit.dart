@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
-import 'package:easy_gpt_chat/domains/models/message_model.dart';
-import 'package:easy_gpt_chat/domains/repositories/api_key_repository.dart';
-import 'package:easy_gpt_chat/domains/repositories/chat_gpt_repository.dart';
+import 'package:easy_gpt_chat/domain/models/message_model.dart';
+import 'package:easy_gpt_chat/domain/repositories/api_key_repository.dart';
+import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
