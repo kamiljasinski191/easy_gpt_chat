@@ -18,6 +18,7 @@ class RootPage extends StatelessWidget {
     return BlocProvider<ChatCubit>(
       create: (context) => getIt()..start(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'EasyGPTchat',
         localizationsDelegates: const [
           AppLocalizations.delegate,

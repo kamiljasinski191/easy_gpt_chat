@@ -16,7 +16,7 @@ class ChatGptRepository {
     return chatGptRemoteDataSource.chatStream(text: text, token: token).map(
       (response) {
         return MessageModel(
-          message: response.choices[0].text,
+          message: response.choices[0].message['content'],
           sender: 'bot',
         );
       },

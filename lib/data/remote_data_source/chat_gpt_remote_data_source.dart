@@ -14,9 +14,12 @@ class ChatGptRemoteDataSource {
     required String token,
   }) {
     final request = CompleteReq(
-      prompt: text,
-      model: kTranslateModelV3,
-      max_tokens: 4000,
+      messages: [
+        {"role": "user", "content": text}
+      ],
+      model: kTranslateModelv35,
+      max_tokens: 700,
+      temperature: .6,
     );
 
     final openAI = ChatGPT.instance.builder(

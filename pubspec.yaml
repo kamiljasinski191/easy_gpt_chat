@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' 
 
-version: 1.0.0+1
+version: 1.0.3+3
 
 environment:
   sdk: '>=2.18.6 <3.0.0'
@@ -17,7 +17,7 @@ dependencies:
   bloc: ^8.1.0
   chat_gpt_sdk:
     git:
-      url: https://github.com/redevRx/Flutter-ChatGPT
+      url: https://github.com/kamiljasinski191/Flutter-ChatGPT
   freezed_annotation: ^2.2.0
   internet_connection_checker: ^1.0.0+1
   flutter_bloc: ^8.1.1

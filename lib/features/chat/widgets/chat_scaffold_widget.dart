@@ -53,7 +53,7 @@ class ChatScaffoldWidget extends StatelessWidget {
                             Navigator.of(context).pop();
                             showDialog(
                               context: context,
-                              builder: (context) => const AboutChatDialog(),
+                              builder: (context) => const ResetApiDialog(),
                             );
                           },
                           child:
@@ -69,7 +69,7 @@ class ChatScaffoldWidget extends StatelessWidget {
                             Navigator.of(context).pop();
                             showDialog(
                               context: context,
-                              builder: (context) => const ResetApiDialog(),
+                              builder: (context) => const AboutChatDialog(),
                             );
                           },
                           child: Text(AppLocalizations.of(context)!.aboutApp),

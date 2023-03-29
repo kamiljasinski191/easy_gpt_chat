@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.easy_gpt_chat">
+    package="dev.onenineone.easy_gpt_chat">
    <application
-        android:label="easy_gpt_chat"
+        android:label="EasyGPT Chat"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
