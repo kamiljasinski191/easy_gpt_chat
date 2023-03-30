@@ -25,8 +25,8 @@ class ChatGptRemoteDataSource {
     final openAI = ChatGPT.instance.builder(
       token,
       baseOption: HttpSetup(
-        connectTimeout: 20000,
-        receiveTimeout: 40000,
+        connectTimeout: 5000,
+        receiveTimeout: 50000,
       ),
     );
     try {

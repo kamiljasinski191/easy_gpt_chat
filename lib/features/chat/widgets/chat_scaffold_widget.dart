@@ -1,7 +1,9 @@
+import 'package:easy_gpt_chat/ad_helper.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/app/dialogs/about_chat_dialog.dart';
 import 'package:easy_gpt_chat/app/dialogs/reset_api_dialog.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
+import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,133 +13,150 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:io';
 
 class ChatScaffoldWidget extends StatelessWidget {
-  const ChatScaffoldWidget(
-      {Key? key,
-      required this.messages,
-      required TextEditingController textEditingController,
-      required this.ad})
-      : _textEditingController = textEditingController,
+  const ChatScaffoldWidget({
+    Key? key,
+    required this.messages,
+    required TextEditingController textEditingController,
+  })  : _textEditingController = textEditingController,
         super(key: key);
-
   final List<MessageModel> messages;
   final TextEditingController _textEditingController;
-  final BannerAd? ad;
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatCubit, ChatState>(
-      builder: (context, state) {
-        return Scaffold(
-          bottomNavigationBar: ad != null && Platform.isAndroid
-              ? SizedBox(
-                  height: ad!.size.height.toDouble(),
-                  width: ad!.size.width.toDouble(),
-                  child: AdWidget(
-                    ad: ad!,
-                  ),
-                )
-              : null,
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text(
-              'EasyGPT Chat',
-            ),
-            actions: [
-              PopupMenuButton(
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            showDialog(
-                              context: context,
-                              builder: (context) => const ResetApiDialog(),
-                            );
-                          },
-                          child:
-                              Text(AppLocalizations.of(context)!.resetApiKey),
-                        ),
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, authState) {
+        BannerAd? bannerAd = authState.bannerAd;
+
+        return BlocBuilder<ChatCubit, ChatState>(
+          builder: (context, chatState) {
+            return Scaffold(
+              bottomNavigationBar: bannerAd != null && Platform.isAndroid
+                  ? SizedBox(
+                      height: bannerAd.size.height.toDouble(),
+                      width: bannerAd.size.width.toDouble(),
+                      child: AdWidget(
+                        ad: bannerAd,
                       ),
-                    ),
-                    PopupMenuItem(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            showDialog(
-                              context: context,
-                              builder: (context) => const AboutChatDialog(),
-                            );
-                          },
-                          child: Text(AppLocalizations.of(context)!.aboutApp),
-                        ),
-                      ),
-                    ),
-                  ];
-                },
-              ),
-              const SizedBox(
-                width: 12,
-              ),
-            ],
-          ),
-          body: Column(
-            children: [
-              Flexible(
-                child: ListView(
-                  reverse: true,
-                  children: [
-                    for (final message in messages)
-                      message.sender == 'user'
-                          ? UserChatMessage(message: message)
-                          : BotChatMessage(message: message),
-                  ],
+                    )
+                  : null,
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text(
+                  'EasyGPT Chat',
                 ),
-              ),
-              LoadingContainerWidget(
-                status: state.status,
-              ),
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          onSubmitted: (value) {
-                            context.read<ChatCubit>().sendMessage(
-                                  message: value,
-                                  sender: 'user',
+                actions: [
+                  PopupMenuButton(
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const ResetApiDialog(),
                                 );
-                            _textEditingController.clear();
-                            FocusManager.instance.primaryFocus?.unfocus();
-                          },
-                          controller: _textEditingController,
-                          decoration: InputDecoration.collapsed(
-                            hintText: AppLocalizations.of(context)!.sendMessage,
+                              },
+                              child: Text(
+                                  AppLocalizations.of(context)!.resetApiKey),
+                            ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          context.read<ChatCubit>().sendMessage(
-                                message: _textEditingController.text,
-                                sender: 'user',
-                              );
-                          _textEditingController.clear();
-                          FocusManager.instance.primaryFocus?.unfocus();
-                        },
-                        icon: const Icon(Icons.send),
-                      ),
-                    ],
+                        PopupMenuItem(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const AboutChatDialog(),
+                                );
+                              },
+                              child:
+                                  Text(AppLocalizations.of(context)!.aboutApp),
+                            ),
+                          ),
+                        ),
+                        PopupMenuItem(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                context.read<AuthCubit>().showAdRewarded();
+                              },
+                              child: const Text('REKLAMA'),
+                            ),
+                          ),
+                        ),
+                      ];
+                    },
                   ),
-                ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                ],
               ),
-            ],
-          ),
+              body: Column(
+                children: [
+                  Flexible(
+                    child: ListView(
+                      reverse: true,
+                      children: [
+                        for (final message in messages)
+                          message.sender == 'user'
+                              ? UserChatMessage(message: message)
+                              : BotChatMessage(message: message),
+                      ],
+                    ),
+                  ),
+                  LoadingContainerWidget(
+                    status: chatState.status,
+                  ),
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              onSubmitted: (value) {
+                                context.read<ChatCubit>().sendMessage(
+                                      message: value,
+                                      sender: 'user',
+                                    );
+                                _textEditingController.clear();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              controller: _textEditingController,
+                              decoration: InputDecoration.collapsed(
+                                hintText:
+                                    AppLocalizations.of(context)!.sendMessage,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              context.read<ChatCubit>().sendMessage(
+                                    message: _textEditingController.text,
+                                    sender: 'user',
+                                  );
+                              _textEditingController.clear();
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            icon: const Icon(Icons.send),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
