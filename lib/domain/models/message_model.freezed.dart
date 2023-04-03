@@ -14,11 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+MessageModel _$MessageModelFromJson(Map<String, dynamic> json) {
+  return _MessageModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$MessageModel {
   String get message => throw _privateConstructorUsedError;
   String get sender => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $MessageModelCopyWith<MessageModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -101,9 +106,12 @@ class __$$_MessageModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_MessageModel implements _MessageModel {
   const _$_MessageModel({required this.message, required this.sender});
+
+  factory _$_MessageModel.fromJson(Map<String, dynamic> json) =>
+      _$$_MessageModelFromJson(json);
 
   @override
   final String message;
@@ -124,6 +132,7 @@ class _$_MessageModel implements _MessageModel {
             (identical(other.sender, sender) || other.sender == sender));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, message, sender);
 
@@ -132,12 +141,22 @@ class _$_MessageModel implements _MessageModel {
   @pragma('vm:prefer-inline')
   _$$_MessageModelCopyWith<_$_MessageModel> get copyWith =>
       __$$_MessageModelCopyWithImpl<_$_MessageModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MessageModelToJson(
+      this,
+    );
+  }
 }
 
 abstract class _MessageModel implements MessageModel {
   const factory _MessageModel(
       {required final String message,
       required final String sender}) = _$_MessageModel;
+
+  factory _MessageModel.fromJson(Map<String, dynamic> json) =
+      _$_MessageModel.fromJson;
 
   @override
   String get message;
