@@ -1,4 +1,3 @@
-import 'package:easy_gpt_chat/ad_helper.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/app/dialogs/about_chat_dialog.dart';
 import 'package:easy_gpt_chat/app/dialogs/reset_api_dialog.dart';

@@ -17,6 +17,8 @@ class AuthCubit extends Cubit<AuthState> {
     loadAdBanner();
   }
 
+  
+
   Future<void> loadAdRewarded() async {
     RewardedAd.load(
       adUnitId: AdHelper.rewardedAdUnitId,

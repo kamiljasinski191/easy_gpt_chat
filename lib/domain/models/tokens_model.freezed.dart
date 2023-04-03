@@ -20,7 +20,9 @@ TokensModel _$TokensModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TokensModel {
+  @HiveField(0)
   int get freeTokens => throw _privateConstructorUsedError;
+  @HiveField(1)
   int get premiumTokens => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +37,7 @@ abstract class $TokensModelCopyWith<$Res> {
           TokensModel value, $Res Function(TokensModel) then) =
       _$TokensModelCopyWithImpl<$Res, TokensModel>;
   @useResult
-  $Res call({int freeTokens, int premiumTokens});
+  $Res call({@HiveField(0) int freeTokens, @HiveField(1) int premiumTokens});
 }
 
 /// @nodoc
@@ -75,7 +77,7 @@ abstract class _$$_TokensModelCopyWith<$Res>
       __$$_TokensModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int freeTokens, int premiumTokens});
+  $Res call({@HiveField(0) int freeTokens, @HiveField(1) int premiumTokens});
 }
 
 /// @nodoc
@@ -107,17 +109,22 @@ class __$$_TokensModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(typeId: 1, adapterName: 'TokensModelAdapter')
 class _$_TokensModel implements _TokensModel {
-  const _$_TokensModel({this.freeTokens = 2, this.premiumTokens = 0});
+  const _$_TokensModel(
+      {@HiveField(0) this.freeTokens = 2,
+      @HiveField(1) this.premiumTokens = 0});
 
   factory _$_TokensModel.fromJson(Map<String, dynamic> json) =>
       _$$_TokensModelFromJson(json);
 
   @override
   @JsonKey()
+  @HiveField(0)
   final int freeTokens;
   @override
   @JsonKey()
+  @HiveField(1)
   final int premiumTokens;
 
   @override
@@ -155,15 +162,18 @@ class _$_TokensModel implements _TokensModel {
 }
 
 abstract class _TokensModel implements TokensModel {
-  const factory _TokensModel({final int freeTokens, final int premiumTokens}) =
-      _$_TokensModel;
+  const factory _TokensModel(
+      {@HiveField(0) final int freeTokens,
+      @HiveField(1) final int premiumTokens}) = _$_TokensModel;
 
   factory _TokensModel.fromJson(Map<String, dynamic> json) =
       _$_TokensModel.fromJson;
 
   @override
+  @HiveField(0)
   int get freeTokens;
   @override
+  @HiveField(1)
   int get premiumTokens;
   @override
   @JsonKey(ignore: true)
