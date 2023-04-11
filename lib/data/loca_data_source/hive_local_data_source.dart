@@ -9,13 +9,14 @@ class HiveLocalDataSource {
 
   final randomId = Random().nextInt(100000).toString();
 
-  Future<void> setGuestUser() async {
+
+  Future<void> setGuestUser({required TokensModel tokens}) async {
     await userBox.put(
       'guestUser',
       UserModel(
         id: randomId,
         email: 'guest',
-        tokens: const TokensModel(),
+        tokens: tokens,
       ),
     );
   }

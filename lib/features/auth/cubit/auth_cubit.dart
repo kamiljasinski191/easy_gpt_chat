@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:easy_gpt_chat/ad_helper.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
+import 'package:easy_gpt_chat/domain/models/user_model.dart';
+import 'package:easy_gpt_chat/domain/repositories/auth_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -10,14 +12,16 @@ part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(const AuthState());
+  AuthCubit(
+    this.authRepository,
+  ) : super(const AuthState());
+
+  final AuthRepository authRepository;
 
   start() async {
     loadAdRewarded();
     loadAdBanner();
   }
-
-  
 
   Future<void> loadAdRewarded() async {
     RewardedAd.load(
@@ -71,6 +75,13 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       ).load();
     }
+  }
+
+  Future<void> loginAsGuest() async {
+    emit(state.copyWith(status: Status.loading));
+    final currentUser = await authRepository.loginAsGuest();
+
+    emit(state.copyWith(currentUser: currentUser, status: Status.succes));
   }
 
   @override

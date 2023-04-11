@@ -18,5 +18,8 @@
     "areYouSure":"Are you sure you want to reset your API key?",
     "yes":"Yes",
     "no":"No!",
-    "ok": "OK"
+    "ok": "OK",
+    "welcomeBack": "Welcome Back!",
+    "loginAsGuest": "LogIn as Guest",
+    "creatingAccountNotAvailable": "Creating an account is not yet possible. Please be patient as we will introduce this functionality soon."
 }

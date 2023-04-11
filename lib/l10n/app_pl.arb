@@ -18,5 +18,8 @@
     "areYouSure":"Czy jesteś pewny/a że chcesz zresetować KluczApi?",
     "yes":"Tak",
     "no":"Nie!",
-    "ok": "OK"
+    "ok": "OK",
+    "welcomeBack": "Witamy Ponownie!",
+    "loginAsGuest": "Zaloguj jako Gość",
+    "creatingAccountNotAvailable": "Zakładanie konta nie jest jeszcze możliwe. Prosimy o cierpliwość wprowadzimy tą funkcjonalność wkrótce."
 }

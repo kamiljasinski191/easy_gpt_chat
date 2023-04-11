@@ -9,14 +9,19 @@ class AuthRepository {
   final HiveLocalDataSource hiveLocalDataSource;
 
   Future<UserModel> loginAsGuest() async {
-    await hiveLocalDataSource.setGuestUser();
-    final UserModel guestUser = await userBox.get('guestUser');
+    final UserModel? guestUser = await userBox.get('guestUser');
     final TokensModel? guestTokens = await userBox.get('guestTokens');
+    if (guestUser == null) {
+      await hiveLocalDataSource.setGuestUser(
+          tokens: guestTokens ?? const TokensModel());
+      final UserModel? guestUser = await userBox.get('guestUser');
+      return guestUser!;
+    }
     if (guestTokens == null) {
       await hiveLocalDataSource.setGuestTokens();
       return guestUser;
     } else {
-      return guestUser.copyWith(tokens: guestTokens);
+      return guestUser;
     }
   }
 }

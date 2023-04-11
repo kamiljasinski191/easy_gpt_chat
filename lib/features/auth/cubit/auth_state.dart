@@ -6,5 +6,6 @@ class AuthState with _$AuthState {
     @Default(Status.initial) Status status,
     BannerAd? bannerAd,
     RewardedAd? rewardedAd,
+    UserModel? currentUser,
   }) = _AuthState;
 }

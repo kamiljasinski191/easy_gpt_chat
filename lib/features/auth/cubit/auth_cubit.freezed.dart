@@ -19,6 +19,7 @@ mixin _$AuthState {
   Status get status => throw _privateConstructorUsedError;
   BannerAd? get bannerAd => throw _privateConstructorUsedError;
   RewardedAd? get rewardedAd => throw _privateConstructorUsedError;
+  UserModel? get currentUser => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -30,7 +31,13 @@ abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res, AuthState>;
   @useResult
-  $Res call({Status status, BannerAd? bannerAd, RewardedAd? rewardedAd});
+  $Res call(
+      {Status status,
+      BannerAd? bannerAd,
+      RewardedAd? rewardedAd,
+      UserModel? currentUser});
+
+  $UserModelCopyWith<$Res>? get currentUser;
 }
 
 /// @nodoc
@@ -49,6 +56,7 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
     Object? status = null,
     Object? bannerAd = freezed,
     Object? rewardedAd = freezed,
+    Object? currentUser = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -63,7 +71,23 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
           ? _value.rewardedAd
           : rewardedAd // ignore: cast_nullable_to_non_nullable
               as RewardedAd?,
+      currentUser: freezed == currentUser
+          ? _value.currentUser
+          : currentUser // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res>? get currentUser {
+    if (_value.currentUser == null) {
+      return null;
+    }
+
+    return $UserModelCopyWith<$Res>(_value.currentUser!, (value) {
+      return _then(_value.copyWith(currentUser: value) as $Val);
+    });
   }
 }
 
@@ -74,7 +98,14 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
       __$$_AuthStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Status status, BannerAd? bannerAd, RewardedAd? rewardedAd});
+  $Res call(
+      {Status status,
+      BannerAd? bannerAd,
+      RewardedAd? rewardedAd,
+      UserModel? currentUser});
+
+  @override
+  $UserModelCopyWith<$Res>? get currentUser;
 }
 
 /// @nodoc
@@ -91,6 +122,7 @@ class __$$_AuthStateCopyWithImpl<$Res>
     Object? status = null,
     Object? bannerAd = freezed,
     Object? rewardedAd = freezed,
+    Object? currentUser = freezed,
   }) {
     return _then(_$_AuthState(
       status: null == status
@@ -105,6 +137,10 @@ class __$$_AuthStateCopyWithImpl<$Res>
           ? _value.rewardedAd
           : rewardedAd // ignore: cast_nullable_to_non_nullable
               as RewardedAd?,
+      currentUser: freezed == currentUser
+          ? _value.currentUser
+          : currentUser // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
     ));
   }
 }
@@ -113,7 +149,10 @@ class __$$_AuthStateCopyWithImpl<$Res>
 
 class _$_AuthState implements _AuthState {
   const _$_AuthState(
-      {this.status = Status.initial, this.bannerAd, this.rewardedAd});
+      {this.status = Status.initial,
+      this.bannerAd,
+      this.rewardedAd,
+      this.currentUser});
 
   @override
   @JsonKey()
@@ -122,10 +161,12 @@ class _$_AuthState implements _AuthState {
   final BannerAd? bannerAd;
   @override
   final RewardedAd? rewardedAd;
+  @override
+  final UserModel? currentUser;
 
   @override
   String toString() {
-    return 'AuthState(status: $status, bannerAd: $bannerAd, rewardedAd: $rewardedAd)';
+    return 'AuthState(status: $status, bannerAd: $bannerAd, rewardedAd: $rewardedAd, currentUser: $currentUser)';
   }
 
   @override
@@ -137,11 +178,14 @@ class _$_AuthState implements _AuthState {
             (identical(other.bannerAd, bannerAd) ||
                 other.bannerAd == bannerAd) &&
             (identical(other.rewardedAd, rewardedAd) ||
-                other.rewardedAd == rewardedAd));
+                other.rewardedAd == rewardedAd) &&
+            (identical(other.currentUser, currentUser) ||
+                other.currentUser == currentUser));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, bannerAd, rewardedAd);
+  int get hashCode =>
+      Object.hash(runtimeType, status, bannerAd, rewardedAd, currentUser);
 
   @JsonKey(ignore: true)
   @override
@@ -154,7 +198,8 @@ abstract class _AuthState implements AuthState {
   const factory _AuthState(
       {final Status status,
       final BannerAd? bannerAd,
-      final RewardedAd? rewardedAd}) = _$_AuthState;
+      final RewardedAd? rewardedAd,
+      final UserModel? currentUser}) = _$_AuthState;
 
   @override
   Status get status;
@@ -162,6 +207,8 @@ abstract class _AuthState implements AuthState {
   BannerAd? get bannerAd;
   @override
   RewardedAd? get rewardedAd;
+  @override
+  UserModel? get currentUser;
   @override
   @JsonKey(ignore: true)
   _$$_AuthStateCopyWith<_$_AuthState> get copyWith =>

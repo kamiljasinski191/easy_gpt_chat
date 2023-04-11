@@ -19,7 +19,7 @@ class ChatGptRemoteDataSource {
       ],
       model: kTranslateModelv35,
       max_tokens: 700,
-      temperature: .6,
+      temperature: .4,
     );
 
     final openAI = ChatGPT.instance.builder(
@@ -29,12 +29,13 @@ class ChatGptRemoteDataSource {
         receiveTimeout: 50000,
       ),
     );
-    try {
-      final myStream = openAI.onCompleteText(request: request).asStream();
-      return myStream;
-    } on DioError catch (_) {
-      rethrow;
-    }
+    final myStream = openAI.onCompleteText(request: request).asStream();
+    return myStream;
+    // try {
+
+    // } on DioError catch (_) {
+    //   rethrow;
+    // }
   }
 
   Future<void> setToken({
