@@ -5,7 +5,6 @@ import 'package:easy_gpt_chat/app/core/routes.dart';
 import 'package:easy_gpt_chat/data/loca_data_source/hive_local_data_source.dart';
 import 'package:easy_gpt_chat/domain/repositories/auth_repository.dart';
 import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
-import 'package:easy_gpt_chat/features/chat/chat_page.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
