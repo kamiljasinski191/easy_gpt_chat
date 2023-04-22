@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthState {
+  String? get errorMessage => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
   BannerAd? get bannerAd => throw _privateConstructorUsedError;
   RewardedAd? get rewardedAd => throw _privateConstructorUsedError;
@@ -32,7 +33,8 @@ abstract class $AuthStateCopyWith<$Res> {
       _$AuthStateCopyWithImpl<$Res, AuthState>;
   @useResult
   $Res call(
-      {Status status,
+      {String? errorMessage,
+      Status status,
       BannerAd? bannerAd,
       RewardedAd? rewardedAd,
       UserModel? currentUser});
@@ -53,12 +55,17 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? errorMessage = freezed,
     Object? status = null,
     Object? bannerAd = freezed,
     Object? rewardedAd = freezed,
     Object? currentUser = freezed,
   }) {
     return _then(_value.copyWith(
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -99,7 +106,8 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {Status status,
+      {String? errorMessage,
+      Status status,
       BannerAd? bannerAd,
       RewardedAd? rewardedAd,
       UserModel? currentUser});
@@ -119,12 +127,17 @@ class __$$_AuthStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? errorMessage = freezed,
     Object? status = null,
     Object? bannerAd = freezed,
     Object? rewardedAd = freezed,
     Object? currentUser = freezed,
   }) {
     return _then(_$_AuthState(
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -149,11 +162,14 @@ class __$$_AuthStateCopyWithImpl<$Res>
 
 class _$_AuthState implements _AuthState {
   const _$_AuthState(
-      {this.status = Status.initial,
+      {this.errorMessage,
+      this.status = Status.initial,
       this.bannerAd,
       this.rewardedAd,
       this.currentUser});
 
+  @override
+  final String? errorMessage;
   @override
   @JsonKey()
   final Status status;
@@ -166,7 +182,7 @@ class _$_AuthState implements _AuthState {
 
   @override
   String toString() {
-    return 'AuthState(status: $status, bannerAd: $bannerAd, rewardedAd: $rewardedAd, currentUser: $currentUser)';
+    return 'AuthState(errorMessage: $errorMessage, status: $status, bannerAd: $bannerAd, rewardedAd: $rewardedAd, currentUser: $currentUser)';
   }
 
   @override
@@ -174,6 +190,8 @@ class _$_AuthState implements _AuthState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthState &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.bannerAd, bannerAd) ||
                 other.bannerAd == bannerAd) &&
@@ -184,8 +202,8 @@ class _$_AuthState implements _AuthState {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, bannerAd, rewardedAd, currentUser);
+  int get hashCode => Object.hash(
+      runtimeType, errorMessage, status, bannerAd, rewardedAd, currentUser);
 
   @JsonKey(ignore: true)
   @override
@@ -196,11 +214,14 @@ class _$_AuthState implements _AuthState {
 
 abstract class _AuthState implements AuthState {
   const factory _AuthState(
-      {final Status status,
+      {final String? errorMessage,
+      final Status status,
       final BannerAd? bannerAd,
       final RewardedAd? rewardedAd,
       final UserModel? currentUser}) = _$_AuthState;
 
+  @override
+  String? get errorMessage;
   @override
   Status get status;
   @override

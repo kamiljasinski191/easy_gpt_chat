@@ -8,6 +8,11 @@ class AuthRepository {
 
   final HiveLocalDataSource hiveLocalDataSource;
 
+  Future<UserModel?> getGuestUser() async {
+    final UserModel? guestUser = await userBox.get('guestUser');
+    return guestUser;
+  }
+
   Future<UserModel> loginAsGuest() async {
     final UserModel? guestUser = await userBox.get('guestUser');
     final TokensModel? guestTokens = await userBox.get('guestTokens');
@@ -23,5 +28,20 @@ class AuthRepository {
     } else {
       return guestUser;
     }
+  }
+
+  Future<void> updateGuestUser({required int amount}) async {
+    final UserModel? guestUser = await userBox.get('guestUser');
+    final TokensModel? guestTokens = await userBox.get('guestTokens');
+    final newAmountOfTokens = guestTokens!.freeTokens + amount;
+    final newTokens = TokensModel(freeTokens: newAmountOfTokens);
+    await userBox.put(
+      'guestTokens',
+      newTokens,
+    );
+    await userBox.put(
+      'guestUser',
+      guestUser!.copyWith(tokens: newTokens),
+    );
   }
 }

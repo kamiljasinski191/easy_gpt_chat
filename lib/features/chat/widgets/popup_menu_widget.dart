@@ -1,8 +1,6 @@
 import 'package:easy_gpt_chat/app/dialogs/about_chat_dialog.dart';
 import 'package:easy_gpt_chat/app/dialogs/reset_api_dialog.dart';
-import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PopupMenuWidget extends StatelessWidget {
@@ -42,17 +40,6 @@ class PopupMenuWidget extends StatelessWidget {
                   );
                 },
                 child: Text(AppLocalizations.of(context)!.aboutApp),
-              ),
-            ),
-          ),
-          PopupMenuItem(
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  context.read<AuthCubit>().showAdRewarded();
-                },
-                child: const Text('REKLAMA'),
               ),
             ),
           ),

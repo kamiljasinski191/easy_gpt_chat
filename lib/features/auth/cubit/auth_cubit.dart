@@ -14,11 +14,49 @@ part 'auth_cubit.freezed.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(
     this.authRepository,
-  ) : super(const AuthState());
+  ) : super(
+          const AuthState(
+            status: Status.initial,
+          ),
+        );
 
   final AuthRepository authRepository;
 
   start() async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    await Future.delayed(
+      const Duration(
+        seconds: 2,
+      ),
+    );
+    try {
+      Future.delayed(
+        const Duration(
+          seconds: 2,
+        ),
+      );
+      final currentUser = await getGuestUser();
+      emit(
+        state.copyWith(
+          currentUser: currentUser,
+        ),
+      );
+      emit(
+        state.copyWith(
+          status: Status.succes,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: Status.error,
+        ),
+      );
+    }
     loadAdRewarded();
     loadAdBanner();
   }
@@ -40,11 +78,14 @@ class AuthCubit extends Cubit<AuthState> {
               },
               onAdClicked: (ad) {});
 
-          print('$ad loaded.');
           emit(state.copyWith(rewardedAd: ad));
         },
         onAdFailedToLoad: (LoadAdError error) {
-          print('RewardedAd failed to load: $error');
+          emit(
+            state.copyWith(
+                status: Status.error,
+                errorMessage: 'RewardedAd failed to load: $error'),
+          );
         },
       ),
     );
@@ -52,8 +93,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> showAdRewarded() async {
     state.rewardedAd?.show(
-      onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) {
-        //give for user some candies :D
+      onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) async {
+        await authRepository.updateGuestUser(amount: 5);
+        await start();
       },
     );
     loadAdRewarded();
@@ -81,7 +123,18 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith(status: Status.loading));
     final currentUser = await authRepository.loginAsGuest();
 
-    emit(state.copyWith(currentUser: currentUser, status: Status.succes));
+    emit(
+      state.copyWith(
+        currentUser: currentUser,
+        status: Status.succes,
+      ),
+    );
+  }
+
+  Future<UserModel?> getGuestUser() async {
+    final currentUser = await authRepository.getGuestUser();
+
+    return currentUser;
   }
 
   @override
