@@ -1,3 +1,4 @@
+import 'package:easy_gpt_chat/app/dialogs/ad_revard_request_dialog.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
 import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
@@ -7,6 +8,7 @@ import 'package:easy_gpt_chat/features/chat/widgets/popup_menu_widget.dart';
 import 'package:easy_gpt_chat/features/chat/widgets/user_message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:io';
@@ -50,6 +52,66 @@ class ChatView extends StatelessWidget {
                     width: 12,
                   ),
                 ],
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const AdRewardRequestDialog(),
+                          );
+                        },
+                        child: Container(
+                          height: 20,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 206, 26, 26),
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              SvgPicture.asset(
+                                'assets/images/tokens_red.svg',
+                                width: 15,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Text(
+                                'Free Tokens : ',
+                              ),
+                              Text(
+                                authState.currentUser!.tokens.freeTokens
+                                    .toString(),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Icon(
+                                Icons.add,
+                                size: 15,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      )
+                    ],
+                  ),
+                ),
               ),
               body: Column(
                 children: [

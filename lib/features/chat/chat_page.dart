@@ -1,3 +1,4 @@
+import 'package:easy_gpt_chat/app/core/configure_dependencies.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:easy_gpt_chat/features/chat/views/chat_view.dart';
@@ -29,24 +30,27 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatCubit, ChatState>(
-      builder: (context, state) {
-        final messages = state.messages;
-        final status = state.status;
-        switch (status) {
-          case Status.initial:
-            return const InitialView();
-          case Status.error:
-            return ErrorView(
-              textEditingController: _textEditingController,
-            );
-          default:
-            return ChatView(
-              messages: messages,
-              textEditingController: _textEditingController,
-            );
-        }
-      },
+    return BlocProvider<ChatCubit>(
+      create: (context) => getIt()..start(),
+      child: BlocBuilder<ChatCubit, ChatState>(
+        builder: (context, state) {
+          final messages = state.messages;
+          final status = state.status;
+          switch (status) {
+            case Status.initial:
+              return const InitialView();
+            case Status.error:
+              return ErrorView(
+                textEditingController: _textEditingController,
+              );
+            default:
+              return ChatView(
+                messages: messages,
+                textEditingController: _textEditingController,
+              );
+          }
+        },
+      ),
     );
   }
 }

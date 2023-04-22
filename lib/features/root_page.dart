@@ -20,15 +20,15 @@ class RootPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ChatCubit>(
-          create: (context) => getIt()..start(),
-        ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(
             AuthRepository(
               HiveLocalDataSource(),
             ),
           )..start(),
+        ),
+        BlocProvider<ChatCubit>(
+          create: (context) => getIt(),
         ),
       ],
       child: MaterialApp.router(
