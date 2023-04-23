@@ -3,12 +3,13 @@ import 'dart:math';
 import 'package:easy_gpt_chat/domain/models/tokens_model.dart';
 import 'package:easy_gpt_chat/domain/models/user_model.dart';
 import 'package:easy_gpt_chat/main.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class HiveLocalDataSource {
   HiveLocalDataSource();
 
   final randomId = Random().nextInt(100000).toString();
-
 
   Future<void> setGuestUser({required TokensModel tokens}) async {
     await userBox.put(

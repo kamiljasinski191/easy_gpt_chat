@@ -7,10 +7,12 @@ import 'package:easy_gpt_chat/domain/models/user_model.dart';
 import 'package:easy_gpt_chat/domain/repositories/auth_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:injectable/injectable.dart';
 
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
+@injectable
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(
     this.authRepository,
