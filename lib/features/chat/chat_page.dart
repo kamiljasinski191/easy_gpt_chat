@@ -40,9 +40,7 @@ class _ChatPageState extends State<ChatPage> {
             case Status.initial:
               return const InitialView();
             case Status.error:
-              return ErrorView(
-                textEditingController: _textEditingController,
-              );
+              return const ErrorView();
             default:
               return ChatView(
                 messages: messages,

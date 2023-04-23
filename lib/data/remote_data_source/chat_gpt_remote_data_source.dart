@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
+import 'package:easy_gpt_chat/env/env.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -10,7 +11,6 @@ class ChatGptRemoteDataSource {
 
   Stream chatStream({
     required String text,
-    required String token,
   }) {
     final request = CompleteReq(
       messages: [
@@ -22,7 +22,7 @@ class ChatGptRemoteDataSource {
     );
 
     final openAI = ChatGPT.instance.builder(
-      token,
+      Env.openAiKey,
       baseOption: HttpSetup(
         connectTimeout: 5000,
         receiveTimeout: 50000,
@@ -37,17 +37,15 @@ class ChatGptRemoteDataSource {
     // }
   }
 
-  Future<void> setToken({
-    required String token,
-  }) async {
+  Future<void> setToken() async {
     final openAI = ChatGPT.instance.builder(
-      token,
+      Env.openAiKey,
       baseOption: HttpSetup(
         connectTimeout: 20000,
-        receiveTimeout: 20000,
+        receiveTimeout: 50000,
       ),
     );
-    return openAI.setToken(token);
+    return openAI.setToken(Env.openAiKey);
   }
 
   Future<bool> hasConnection() async {

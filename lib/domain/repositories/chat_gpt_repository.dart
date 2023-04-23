@@ -11,9 +11,12 @@ class ChatGptRepository {
 
   Stream<MessageModel> chatStreamConverted({
     required String text,
-    required String token,
   }) {
-    return chatGptRemoteDataSource.chatStream(text: text, token: token).map(
+    return chatGptRemoteDataSource
+        .chatStream(
+      text: text,
+    )
+        .map(
       (response) {
         return MessageModel(
           message: response.choices[0].message['content'],
@@ -23,10 +26,8 @@ class ChatGptRepository {
     );
   }
 
-  Future<void> setToken({
-    required String token,
-  }) async {
-    return chatGptRemoteDataSource.setToken(token: token);
+  Future<void> setToken() async {
+    return chatGptRemoteDataSource.setToken();
   }
 
   Future<bool> hasConnection() async {

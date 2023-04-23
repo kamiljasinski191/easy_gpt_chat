@@ -27,9 +27,12 @@ void main() {
       final List<Choices> choices = [
         Choices.fromJson(
           {
-            'text': 'tText',
+            'message': {
+              'content': 'tText',
+            },
+           
             'index': 0,
-            'logprobs': null,
+           
             'finish_reason': 'stop'
           },
         )
@@ -38,7 +41,6 @@ void main() {
       when(
         () => mockChatGptRemoteDataSource.chatStream(
           text: any(named: 'text'),
-          token: any(named: 'token'),
         ),
       ).thenAnswer(
         (_) => Stream<dynamic>.fromIterable(
@@ -48,9 +50,7 @@ void main() {
         ),
       );
       when(
-        () => mockChatGptRemoteDataSource.setToken(
-          token: any(named: 'token'),
-        ),
+        () => mockChatGptRemoteDataSource.setToken(),
       ).thenAnswer(
         (invocation) async => {},
       );
@@ -67,7 +67,6 @@ void main() {
     () {
       Stream<MessageModel> sutMethod() => sut.chatStreamConverted(
             text: 'testText',
-            token: 'testToken',
           );
       expect(sutMethod(),
           emitsInOrder([const MessageModel(message: 'tText', sender: 'bot')]));
@@ -77,21 +76,11 @@ void main() {
     'should call setToken() once',
     () async {
       verifyNever(
-        () => mockChatGptRemoteDataSource.setToken(
-          token: any(
-            named: 'token',
-          ),
-        ),
+        () => mockChatGptRemoteDataSource.setToken(),
       );
-      await sut.setToken(
-        token: 'tToken',
-      );
+      await sut.setToken();
       verify(
-        () => mockChatGptRemoteDataSource.setToken(
-          token: any(
-            named: 'token',
-          ),
-        ),
+        () => mockChatGptRemoteDataSource.setToken(),
       ).called(1);
     },
   );

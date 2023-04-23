@@ -1,7 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
-import 'package:easy_gpt_chat/domain/repositories/api_key_repository.dart';
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,26 +8,22 @@ import 'package:mocktail/mocktail.dart';
 
 class MockChatGptRepository extends Mock implements ChatGptRepository {}
 
-class MockApiKeyRepository extends Mock implements ApiKeyRepository {}
-
 void main() {
   late ChatCubit sut;
 
   late MockChatGptRepository mockChatGptRepository;
-  late MockApiKeyRepository mockApiKeyRepository;
 
   setUp(
     () {
       mockChatGptRepository = MockChatGptRepository();
-      mockApiKeyRepository = MockApiKeyRepository();
 
       sut = ChatCubit(
         mockChatGptRepository,
-        mockApiKeyRepository,
       );
 
       when(() => mockChatGptRepository.chatStreamConverted(
-          text: any(named: 'text'), token: any(named: 'token'))).thenAnswer(
+            text: any(named: 'text'),
+          )).thenAnswer(
         (_) => Stream<MessageModel>.fromIterable(
           [
             const MessageModel(
@@ -65,11 +60,6 @@ void main() {
       setUp(
         () {
           when(
-            () => mockApiKeyRepository.getSecuredApiKey(),
-          ).thenAnswer(
-            (_) async => 'testRandomApiKey',
-          );
-          when(
             () => mockChatGptRepository.hasConnection(),
           ).thenAnswer(
             (_) async => false,
@@ -84,6 +74,9 @@ void main() {
         expect: () => [
           const ChatState(
             status: Status.initial,
+          ),
+          const ChatState(
+            status: Status.loading,
           ),
           const ChatState(
             status: Status.error,
@@ -115,48 +108,13 @@ void main() {
       setUp(
         () {
           when(
-            () => mockApiKeyRepository.getSecuredApiKey(),
-          ).thenAnswer(
-            (_) async => null,
-          );
-          when(
             () => mockChatGptRepository.hasConnection(),
           ).thenAnswer(
             (_) async => true,
           );
         },
       );
-      blocTest<ChatCubit, ChatState>(
-        '''emits state error with noInternet message when user 
-      have no api key on start app.''',
-        build: () => sut,
-        act: (bloc) => bloc.start(),
-        expect: () => [
-          const ChatState(
-            status: Status.initial,
-          ),
-          const ChatState(
-            status: Status.error,
-            errorMessage: 'noApiKey',
-          ),
-        ],
-      );
-
-      blocTest<ChatCubit, ChatState>(
-        '''emits state error with noInternet message when user 
-      have no api key at try to send message.''',
-        build: () => sut,
-        act: (cubit) => cubit.sendMessage(
-          message: 'lol4',
-          sender: 'user',
-        ),
-        expect: () => [
-          const ChatState(
-            status: Status.error,
-            errorMessage: 'noApiKey',
-          ),
-        ],
-      );
+     
     },
   );
 
@@ -166,21 +124,12 @@ void main() {
       setUp(
         () {
           when(
-            () => mockApiKeyRepository.getSecuredApiKey(),
-          ).thenAnswer(
-            (_) async => 'testRandomApiKey',
-          );
-          when(
             () => mockChatGptRepository.hasConnection(),
           ).thenAnswer(
             (_) async => true,
           );
           when(
-            () => mockChatGptRepository.setToken(
-              token: any(
-                named: 'token',
-              ),
-            ),
+            () => mockChatGptRepository.setToken(),
           ).thenAnswer(
             (_) async => {},
           );
@@ -199,7 +148,6 @@ void main() {
             status: Status.loading,
             messages: [],
             errorMessage: '',
-            apiKey: '',
           ),
           const ChatState(
             status: Status.succes,
@@ -237,7 +185,6 @@ void main() {
               ),
             ],
             errorMessage: '',
-            apiKey: '',
           ),
           const ChatState(
             status: Status.succes,

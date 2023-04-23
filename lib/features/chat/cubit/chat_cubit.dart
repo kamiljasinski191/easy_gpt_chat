@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
-import 'package:easy_gpt_chat/domain/repositories/api_key_repository.dart';
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -15,11 +14,11 @@ part 'chat_cubit.freezed.dart';
 
 @injectable
 class ChatCubit extends Cubit<ChatState> {
-  ChatCubit(this.chatGptRepository, this.apiKeyRepository)
-      : super(const ChatState());
+  ChatCubit(
+    this.chatGptRepository,
+  ) : super(const ChatState());
 
   final ChatGptRepository chatGptRepository;
-  final ApiKeyRepository apiKeyRepository;
 
   StreamSubscription? streamSubscription;
 
@@ -33,16 +32,13 @@ class ChatCubit extends Cubit<ChatState> {
       ),
     );
     bool hasConnection = await chatGptRepository.hasConnection();
-    final apiKey = await apiKeyRepository.getSecuredApiKey();
-
-    if (apiKey == null || apiKey.length < 10) {
-      emit(
-        state.copyWith(
-          status: Status.error,
-          errorMessage: 'noApiKey',
-        ),
-      );
-    } else if (!hasConnection) {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+        messages: messages,
+      ),
+    );
+    if (!hasConnection) {
       emit(
         state.copyWith(
           status: Status.error,
@@ -50,13 +46,6 @@ class ChatCubit extends Cubit<ChatState> {
         ),
       );
     } else {
-      await chatGptRepository.setToken(token: apiKey);
-      emit(
-        state.copyWith(
-          status: Status.loading,
-          messages: messages,
-        ),
-      );
       emit(
         state.copyWith(
           status: Status.succes,
@@ -71,15 +60,8 @@ class ChatCubit extends Cubit<ChatState> {
     required String sender,
   }) async {
     bool hasConnection = await chatGptRepository.hasConnection();
-    final apiKey = await apiKeyRepository.getSecuredApiKey();
-    if (apiKey == null || apiKey.length < 10) {
-      emit(
-        state.copyWith(
-          status: Status.error,
-          errorMessage: 'noApiKey',
-        ),
-      );
-    } else if (!hasConnection) {
+
+    if (!hasConnection) {
       emit(
         state.copyWith(
           status: Status.error,
@@ -102,7 +84,6 @@ class ChatCubit extends Cubit<ChatState> {
       streamSubscription = chatGptRepository
           .chatStreamConverted(
         text: message,
-        token: apiKey,
       )
           .listen(
         (response) {
@@ -141,18 +122,6 @@ class ChatCubit extends Cubit<ChatState> {
           },
         );
     }
-  }
-
-  Future<void> setChatApiKey({
-    required String apiKey,
-  }) async {
-    await apiKeyRepository.setSecuredApiKey(apiKey: apiKey);
-    start();
-  }
-
-  Future<void> deleteChatApiKey() async {
-    await apiKeyRepository.deleteSecuredApiKey();
-    start();
   }
 
   Future<void> launchOpenAiUrl() async {
