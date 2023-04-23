@@ -7,7 +7,6 @@ import 'package:easy_gpt_chat/domain/models/message_model.dart';
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 part 'chat_state.dart';
 part 'chat_cubit.freezed.dart';
@@ -121,14 +120,6 @@ class ChatCubit extends Cubit<ChatState> {
             }
           },
         );
-    }
-  }
-
-  Future<void> launchOpenAiUrl() async {
-    final Uri url = Uri.parse('https://beta.openai.com/account/api-keys');
-
-    if (!await launchUrl(url)) {
-      throw 'Could not launch $url';
     }
   }
 
