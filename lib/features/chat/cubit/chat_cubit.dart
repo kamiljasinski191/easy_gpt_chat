@@ -37,6 +37,8 @@ class ChatCubit extends Cubit<ChatState> {
         messages: messages,
       ),
     );
+    await setToken();
+
     if (!hasConnection) {
       emit(
         state.copyWith(
@@ -52,6 +54,10 @@ class ChatCubit extends Cubit<ChatState> {
         ),
       );
     }
+  }
+
+  Future<void> setToken() async {
+    await chatGptRepository.setToken();
   }
 
   Future<void> sendMessage({
