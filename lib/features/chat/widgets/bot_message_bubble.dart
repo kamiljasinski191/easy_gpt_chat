@@ -21,10 +21,13 @@ class BotMessageBubble extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.green.withAlpha(80),
-                  borderRadius: BorderRadius.circular(35),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 16,
+                  ),
                   child: SelectableText(
                     message.message,
                   ),
@@ -36,7 +39,7 @@ class BotMessageBubble extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: CircleAvatar(
               backgroundColor: Colors.green,
-              backgroundImage: AssetImage('assets/images/computer.png'),
+              backgroundImage: AssetImage('assets/images/chatbot.png'),
             ),
           ),
         ],

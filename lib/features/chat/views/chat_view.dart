@@ -3,6 +3,7 @@ import 'package:easy_gpt_chat/domain/models/message_model.dart';
 import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
 import 'package:easy_gpt_chat/features/chat/widgets/bot_message_bubble.dart';
+import 'package:easy_gpt_chat/features/chat/widgets/error_message_bubble.dart';
 import 'package:easy_gpt_chat/features/chat/widgets/loading_bubble.dart';
 import 'package:easy_gpt_chat/features/chat/widgets/popup_menu_widget.dart';
 import 'package:easy_gpt_chat/features/chat/widgets/user_message_bubble.dart';
@@ -119,15 +120,26 @@ class ChatView extends StatelessWidget {
                     child: ListView(
                       reverse: true,
                       children: [
-                        for (final message in messages)
-                          message.sender == 'user'
-                              ? UserMessageBubble(message: message)
-                              : BotMessageBubble(message: message),
+                        LoadingBubble(
+                          status: chatState.status,
+                        ),
+                        for (final message in messages) ...[
+                          if (message.sender == 'user') ...[
+                            UserMessageBubble(
+                              message: message,
+                            ),
+                          ] else if (message.sender == 'bot') ...[
+                            BotMessageBubble(
+                              message: message,
+                            ),
+                          ] else if (message.sender == 'error') ...[
+                            ErrorMessageBubble(
+                              message: message,
+                            ),
+                          ]
+                        ],
                       ],
                     ),
-                  ),
-                  LoadingBubble(
-                    status: chatState.status,
                   ),
                   SafeArea(
                     child: Padding(

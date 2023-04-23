@@ -18,12 +18,15 @@ class LoadingBubble extends StatelessWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 16,
+                ),
                 child: Container(
                   height: 70,
                   decoration: BoxDecoration(
                     color: Colors.green.withAlpha(80),
-                    borderRadius: BorderRadius.circular(35),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -42,7 +45,7 @@ class LoadingBubble extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: CircleAvatar(
                 backgroundColor: Colors.green,
-                backgroundImage: AssetImage('assets/images/computer.png'),
+                backgroundImage: AssetImage('assets/images/chatbot.png'),
               ),
             ),
           ],
