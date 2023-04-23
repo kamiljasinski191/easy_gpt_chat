@@ -22,6 +22,8 @@ migrate_working_dir/
 #.vscode/
 
 api_key.dart
+*.env
+env.g.dart
 
 
 # Flutter/Dart/Pub related
@@ -48,3 +50,4 @@ app.*.map.json
 
 lib/ad_helper.dart
 android/app/src/main/AndroidManifest.xml
+
