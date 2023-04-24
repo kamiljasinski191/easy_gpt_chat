@@ -23,5 +23,7 @@
     "loginAsGuest": "LogIn as Guest",
     "creatingAccountNotAvailable": "Creating an account is not yet possible. Please be patient as we will introduce this functionality soon.",
     "watchAd": "Wach an Ad for 5 tokens?",
-    "adReward": "Rewarder Ad"
+    "adReward": "Rewarder Ad",
+    "logOut": "LogOut!",
+    "wantToLogOut": "Do you realy want to log out??"
 }

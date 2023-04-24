@@ -19,14 +19,16 @@ class AuthRepository {
     final UserModel? guestUser = await userBox.get('guestUser');
     final TokensModel? guestTokens = await userBox.get('guestTokens');
     if (guestUser == null) {
-      await hiveLocalDataSource.setGuestUser(
-          tokens: guestTokens ?? const TokensModel());
+      if (guestTokens == null) {
+        await hiveLocalDataSource.setGuestTokens();
+        final TokensModel guestTokens = await userBox.get('guestTokens');
+        await hiveLocalDataSource.setGuestUser(tokens: guestTokens);
+      } else {
+        await hiveLocalDataSource.setGuestUser(tokens: guestTokens);
+      }
+
       final UserModel? guestUser = await userBox.get('guestUser');
       return guestUser!;
-    }
-    if (guestTokens == null) {
-      await hiveLocalDataSource.setGuestTokens();
-      return guestUser;
     } else {
       return guestUser;
     }
@@ -45,5 +47,9 @@ class AuthRepository {
       'guestUser',
       guestUser!.copyWith(tokens: newTokens),
     );
+  }
+
+  Future<void> deleteGuestUser() async {
+    await userBox.delete('guestUser');
   }
 }

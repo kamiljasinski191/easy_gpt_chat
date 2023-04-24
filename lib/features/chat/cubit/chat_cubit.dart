@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
+import 'package:easy_gpt_chat/domain/repositories/auth_repository.dart';
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -13,11 +14,11 @@ part 'chat_cubit.freezed.dart';
 
 @injectable
 class ChatCubit extends Cubit<ChatState> {
-  ChatCubit(
-    this.chatGptRepository,
-  ) : super(const ChatState());
+  ChatCubit(this.chatGptRepository, this.authRepository)
+      : super(const ChatState());
 
   final ChatGptRepository chatGptRepository;
+  final AuthRepository authRepository;
 
   StreamSubscription? streamSubscription;
 
@@ -99,6 +100,8 @@ class ChatCubit extends Cubit<ChatState> {
 
           messages.insert(0, responseMessage);
 
+          authRepository.updateGuestUser(amount: -1);
+
           emit(
             state.copyWith(
               messages: messages,
@@ -110,19 +113,43 @@ class ChatCubit extends Cubit<ChatState> {
           (error) {
             if (error is DioError) {
               if (error.response != null) {
-                emit(state.copyWith(
-                  status: Status.error,
-                  errorMessage: error.response?.data['error']['message'],
-                  errorCode: error.response?.data['error']['code'],
-                ));
-              } else {
+                final MessageModel errorMessage = MessageModel(
+                  message: error.response?.data['error']['message'] ?? error,
+                  sender: 'error',
+                );
+                messages.insert(0, errorMessage);
                 emit(
                   state.copyWith(
-                    status: Status.error,
-                    errorMessage: error.message,
+                    messages: messages,
+                    status: Status.succes,
+                  ),
+                );
+              } else {
+                final MessageModel errorMessage = MessageModel(
+                  message:
+                      error.message.substring(0, error.message.indexOf("[")),
+                  sender: 'error',
+                );
+                messages.insert(0, errorMessage);
+                emit(
+                  state.copyWith(
+                    messages: messages,
+                    status: Status.succes,
                   ),
                 );
               }
+            } else {
+              final MessageModel errorMessage = MessageModel(
+                message: error.message ?? error,
+                sender: 'error',
+              );
+              messages.insert(0, errorMessage);
+              emit(
+                state.copyWith(
+                  messages: messages,
+                  status: Status.succes,
+                ),
+              );
             }
           },
         );

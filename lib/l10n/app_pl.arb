@@ -23,5 +23,7 @@
     "loginAsGuest": "Zaloguj jako Gość",
     "creatingAccountNotAvailable": "Zakładanie konta nie jest jeszcze możliwe. Prosimy o cierpliwość wprowadzimy tą funkcjonalność wkrótce.",
     "watchAd": "Obejrzeć reklamę za 5 tokenów?",
-    "adReward": "Reklamna z nagrodą"
+    "adReward": "Reklamna z nagrodą",
+    "logOut": "Wyloguj!",
+    "wantToLogOut": "Czy napewno chcesz się wylogować??"
 }
