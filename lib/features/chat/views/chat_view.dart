@@ -1,3 +1,4 @@
+import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/app/dialogs/ad_revard_request_dialog.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
 import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
@@ -148,14 +149,19 @@ class ChatView extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextField(
-                              onSubmitted: (value) {
-                                context.read<ChatCubit>().sendMessage(
-                                      message: value,
-                                      sender: 'user',
-                                    );
-                                _textEditingController.clear();
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              },
+                              onSubmitted: chatState.status == Status.succes
+                                  ? (value) {
+                                      context.read<ChatCubit>().sendMessage(
+                                          message: value,
+                                          sender: 'user',
+                                          textFieldCleaner: () {
+                                            _textEditingController.clear();
+                                          });
+
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+                                    }
+                                  : null,
                               controller: _textEditingController,
                               decoration: InputDecoration.collapsed(
                                 hintText:
@@ -164,14 +170,19 @@ class ChatView extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {
-                              context.read<ChatCubit>().sendMessage(
-                                    message: _textEditingController.text,
-                                    sender: 'user',
-                                  );
-                              _textEditingController.clear();
-                              FocusManager.instance.primaryFocus?.unfocus();
-                            },
+                            onPressed: chatState.status == Status.succes
+                                ? () {
+                                    context.read<ChatCubit>().sendMessage(
+                                        message: _textEditingController.text,
+                                        sender: 'user',
+                                        textFieldCleaner: () {
+                                          _textEditingController.clear();
+                                        });
+
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  }
+                                : null,
                             icon: const Icon(Icons.send),
                           ),
                         ],

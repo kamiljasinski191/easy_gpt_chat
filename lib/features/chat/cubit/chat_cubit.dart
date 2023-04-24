@@ -64,6 +64,7 @@ class ChatCubit extends Cubit<ChatState> {
   Future<void> sendMessage({
     required String message,
     required String sender,
+    required Function textFieldCleaner,
   }) async {
     bool hasConnection = await chatGptRepository.hasConnection();
 
@@ -101,6 +102,8 @@ class ChatCubit extends Cubit<ChatState> {
           messages.insert(0, responseMessage);
 
           authRepository.updateGuestUser(amount: -1);
+
+          textFieldCleaner();
 
           emit(
             state.copyWith(
