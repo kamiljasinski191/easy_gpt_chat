@@ -1,4 +1,5 @@
 import 'package:easy_gpt_chat/data/loca_data_source/hive_local_data_source.dart';
+import 'package:easy_gpt_chat/data/remote_data_source/auth_remote_data_source.dart';
 import 'package:easy_gpt_chat/domain/models/tokens_model.dart';
 import 'package:easy_gpt_chat/domain/models/user_model.dart';
 import 'package:easy_gpt_chat/main.dart';
@@ -6,9 +7,19 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class AuthRepository {
-  AuthRepository(this.hiveLocalDataSource);
+  AuthRepository(
+    this.hiveLocalDataSource,
+    this.authRemoteDataSource,
+  );
 
   final HiveLocalDataSource hiveLocalDataSource;
+  final AuthRemoteDataSource authRemoteDataSource;
+
+  Stream<UserModel?> getUserStream() {
+    return authRemoteDataSource.currentUserStream();
+  }
+
+  //GUEST
 
   Future<UserModel?> getGuestUser() async {
     final UserModel? guestUser = await userBox.get('guestUser');

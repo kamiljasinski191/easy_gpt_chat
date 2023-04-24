@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "913160902581",
+    "project_id": "easy-gpt-chat",
+    "storage_bucket": "easy-gpt-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913160902581:android:1df2f03a756fc1c6316bfc",
+        "android_client_info": {
+          "package_name": "dev.onenineone.easy_gpt_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913160902581-709in21716hrp0kicufovrrdfog8l1i2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSmnCjoXlT5LX6rUJTZMFR9ohiqEUjzh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913160902581-709in21716hrp0kicufovrrdfog8l1i2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

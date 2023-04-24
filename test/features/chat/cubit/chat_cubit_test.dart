@@ -97,6 +97,7 @@ void main() {
         act: (cubit) => cubit.sendMessage(
           message: 'lol4',
           sender: 'user',
+          textFieldCleaner: () {},
         ),
         expect: () => [
           const ChatState(
@@ -167,6 +168,7 @@ void main() {
         act: (cubit) => cubit.sendMessage(
           message: 'lol4',
           sender: 'user',
+          textFieldCleaner: () {},
         ),
         expect: () => [
           const ChatState(

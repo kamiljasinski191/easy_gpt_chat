@@ -35,6 +35,8 @@ dependencies:
   go_router: ^6.5.5
   flutter_svg: ^2.0.5
   envied: ^0.3.0
+  firebase_auth: ^4.4.2
+  cloud_firestore: ^4.5.2
 
 dev_dependencies:
   flutter_test:

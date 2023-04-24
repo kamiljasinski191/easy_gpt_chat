@@ -24,7 +24,10 @@ migrate_working_dir/
 api_key.dart
 *.env
 env.g.dart
-
+lib/ad_helper.dart
+android/app/src/main/AndroidManifest.xml
+firebase_options.dart
+GoogleService-Info.plist
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -48,6 +51,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-lib/ad_helper.dart
-android/app/src/main/AndroidManifest.xml
+
 

@@ -25,5 +25,12 @@
     "watchAd": "Wach an Ad for 5 tokens?",
     "adReward": "Rewarder Ad",
     "logOut": "LogOut!",
-    "wantToLogOut": "Do you realy want to log out??"
+    "wantToLogOut": "Do you realy want to log out??",
+    "e_Mail": "e-Mail",
+    "password": "Password",
+    "repeatPassword": "Repeat Password",
+    "login": "Login",
+    "register": "Register",
+    "dontHaveAccount": "Don't have account? Create now!",
+    "backToLogin": "Go back to login."
 }

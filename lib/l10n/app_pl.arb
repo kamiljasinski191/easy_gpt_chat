@@ -25,5 +25,12 @@
     "watchAd": "Obejrzeć reklamę za 5 tokenów?",
     "adReward": "Reklamna z nagrodą",
     "logOut": "Wyloguj!",
-    "wantToLogOut": "Czy napewno chcesz się wylogować??"
+    "wantToLogOut": "Czy napewno chcesz się wylogować??",
+    "e_Mail": "e-Mail",
+    "password": "Hasło",
+    "repeatPassword": "Powtórz Hasło",
+    "login": "Zaloguj",
+    "register": "Zarejestruj",
+    "dontHaveAccount": "Nie masz konta? Załóż je!",
+    "backToLogin": "Wróć do logowania."
 }

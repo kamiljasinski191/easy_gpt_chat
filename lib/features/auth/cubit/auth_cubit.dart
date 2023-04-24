@@ -27,35 +27,99 @@ class AuthCubit extends Cubit<AuthState> {
         );
 
   final AuthRepository authRepository;
+  StreamSubscription? userStream;
 
   start() async {
-    listenToUserChanges();
+    getUserStream();
     emit(
       state.copyWith(
         status: Status.loading,
       ),
     );
-    try {
-      final currentUser = await getGuestUser();
-      emit(
-        state.copyWith(
-          currentUser: currentUser,
-        ),
-      );
-      emit(
-        state.copyWith(
-          status: Status.succes,
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(
-          status: Status.error,
-        ),
-      );
+    if (state.currentUser == null) {
+      try {
+        final currentUser = await getGuestUser();
+        emit(
+          state.copyWith(
+            currentUser: currentUser,
+          ),
+        );
+
+        emit(
+          state.copyWith(
+            status: Status.succes,
+          ),
+        );
+      } catch (e) {
+        emit(
+          state.copyWith(
+            status: Status.error,
+          ),
+        );
+      }
     }
+
     loadAdRewarded();
     loadAdBanner();
+  }
+
+  Future<void> getUserStream() async {
+    userStream = authRepository.getUserStream().listen(
+      (user) {
+        if (user != null) {
+          emit(
+            state.copyWith(currentUser: user),
+          );
+        } else {
+          emit(
+            state.copyWith(currentUser: null),
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> loginAsGuest() async {
+    emit(state.copyWith(status: Status.loading));
+    final currentUser = await authRepository.loginAsGuest();
+
+    emit(
+      state.copyWith(
+        currentUser: currentUser,
+        status: Status.succes,
+      ),
+    );
+  }
+
+  Future<void> deleteGuestUser() async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    await authRepository.deleteGuestUser();
+    emit(
+      state.copyWith(
+        currentUser: null,
+        status: Status.succes,
+      ),
+    );
+  }
+
+  Future<UserModel?> getGuestUser() async {
+    final currentUser = await authRepository.getGuestUser();
+
+    return currentUser;
+  }
+
+  void listenToGuestUserChanges() {
+    final userStream = userBox.watch();
+
+    streamSubscription = userStream.listen((event) {
+      if (event.key == 'guestUser') {
+        emit(state.copyWith(currentUser: event.value));
+      }
+    });
   }
 
   Future<void> loadAdRewarded() async {
@@ -115,54 +179,12 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> loginAsGuest() async {
-    emit(state.copyWith(status: Status.loading));
-    final currentUser = await authRepository.loginAsGuest();
-
-    emit(
-      state.copyWith(
-        currentUser: currentUser,
-        status: Status.succes,
-      ),
-    );
-  }
-
-  Future<void> deleteGuestUser() async {
-    emit(
-      state.copyWith(
-        status: Status.loading,
-      ),
-    );
-    await authRepository.deleteGuestUser();
-    emit(
-      state.copyWith(
-        currentUser: null,
-        status: Status.succes,
-      ),
-    );
-  }
-
-  Future<UserModel?> getGuestUser() async {
-    final currentUser = await authRepository.getGuestUser();
-
-    return currentUser;
-  }
-
-  void listenToUserChanges() {
-    final userStream = userBox.watch();
-
-    streamSubscription = userStream.listen((event) {
-      if (event.key == 'guestUser') {
-        emit(state.copyWith(currentUser: event.value));
-      }
-    });
-  }
-
   @override
   Future<void> close() {
     state.bannerAd?.dispose();
     state.rewardedAd?.dispose();
     streamSubscription?.cancel();
+    userStream?.cancel();
     return super.close();
   }
 }
