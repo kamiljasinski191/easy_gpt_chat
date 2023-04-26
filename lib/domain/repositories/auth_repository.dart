@@ -19,6 +19,41 @@ class AuthRepository {
     return authRemoteDataSource.currentUserStream();
   }
 
+  Future<void> registerUser({
+    required String email,
+    required String password,
+  }) {
+    return authRemoteDataSource.registerUser(
+      email: email,
+      password: password,
+    );
+  }
+
+  Future<void> logInUser({
+    required String email,
+    required String password,
+  }) {
+    return authRemoteDataSource.logInUser(
+      email: email,
+      password: password,
+    );
+  }
+
+  Future<void> logOutUser() {
+    return authRemoteDataSource.logOutUser();
+  }
+
+  Future<void> updateUserTokens({
+    required int currentTokens,
+    required int amount,
+  }) async {
+    return authRemoteDataSource.updateUserTokens(
+      data: {
+        'tokens': {'free_tokens': currentTokens + amount}
+      },
+    );
+  }
+
   //GUEST
 
   Future<UserModel?> getGuestUser() async {

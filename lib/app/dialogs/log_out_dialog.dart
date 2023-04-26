@@ -22,7 +22,7 @@ class LogOutDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            context.read<AuthCubit>().deleteGuestUser();
+            context.read<AuthCubit>().logOutUser();
             Navigator.of(context).pop();
           },
           child: Text(AppLocalizations.of(context)!.yes),

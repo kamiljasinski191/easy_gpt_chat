@@ -83,7 +83,7 @@ class AuthErrorView extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        context.read<ChatCubit>().start();
+                        context.read<AuthCubit>().start();
                       },
                       child: Text(
                         AppLocalizations.of(context)!.reload,

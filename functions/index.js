@@ -10,7 +10,7 @@ exports.createUserDocument = functions.auth.user().onCreate((user) => {
     const userEmail = user.email;
     const userName = user.displayName;
     db.doc("users/" + userId).set({
-        "email": userEmail, "free_tokens": 2, "display_name": userName,
+        "email": userEmail, "tokens": { "free_tokens": 2 }, "display_name": userName,
     });
 });
 

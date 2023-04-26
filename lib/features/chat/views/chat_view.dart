@@ -91,8 +91,8 @@ class ChatView extends StatelessWidget {
                                 'Free Tokens : ',
                               ),
                               Text(
-                                authState.currentUser!.tokens.freeTokens
-                                    .toString(),
+                                authState.currentUser?.tokens.freeTokens
+                                    .toString() ?? '',
                               ),
                               const SizedBox(
                                 width: 5,
@@ -152,11 +152,13 @@ class ChatView extends StatelessWidget {
                               onSubmitted: chatState.status == Status.succes
                                   ? (value) {
                                       context.read<ChatCubit>().sendMessage(
-                                          message: value,
-                                          sender: 'user',
-                                          textFieldCleaner: () {
-                                            _textEditingController.clear();
-                                          });
+                                            message: value,
+                                            sender: 'user',
+                                            textFieldCleaner: () {
+                                              _textEditingController.clear();
+                                            },
+                                            currentUser: authState.currentUser!,
+                                          );
 
                                       FocusManager.instance.primaryFocus
                                           ?.unfocus();
@@ -173,11 +175,13 @@ class ChatView extends StatelessWidget {
                             onPressed: chatState.status == Status.succes
                                 ? () {
                                     context.read<ChatCubit>().sendMessage(
-                                        message: _textEditingController.text,
-                                        sender: 'user',
-                                        textFieldCleaner: () {
-                                          _textEditingController.clear();
-                                        });
+                                          message: _textEditingController.text,
+                                          sender: 'user',
+                                          textFieldCleaner: () {
+                                            _textEditingController.clear();
+                                          },
+                                          currentUser: authState.currentUser!,
+                                        );
 
                                     FocusManager.instance.primaryFocus
                                         ?.unfocus();

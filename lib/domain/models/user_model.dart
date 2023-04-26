@@ -11,9 +11,16 @@ class UserModel with _$UserModel {
     adapterName: 'UserModelAdapter',
   )
   const factory UserModel({
-    @HiveField(0) required String id,
-    @HiveField(1) required String? email,
-    @HiveField(2) required TokensModel tokens,
+    @HiveField(0)
+    @JsonKey(ignore: true)
+    @Default('')
+        String id,
+    @HiveField(1)
+        required String? email,
+    @HiveField(2)
+    // @JsonKey(ignore: true)
+    @Default(TokensModel())
+        TokensModel tokens,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, Object?> json) =>

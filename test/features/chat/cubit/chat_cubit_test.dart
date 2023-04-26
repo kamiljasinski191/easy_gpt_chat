@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
+import 'package:easy_gpt_chat/domain/models/user_model.dart';
 import 'package:easy_gpt_chat/domain/repositories/auth_repository.dart';
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
 import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
@@ -98,6 +99,7 @@ void main() {
           message: 'lol4',
           sender: 'user',
           textFieldCleaner: () {},
+          currentUser: const UserModel(email: 'email'),
         ),
         expect: () => [
           const ChatState(
@@ -169,6 +171,7 @@ void main() {
           message: 'lol4',
           sender: 'user',
           textFieldCleaner: () {},
+          currentUser: const UserModel(email: 'email'),
         ),
         expect: () => [
           const ChatState(

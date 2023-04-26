@@ -21,6 +21,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserModel {
   @HiveField(0)
+  @JsonKey(ignore: true)
   String get id => throw _privateConstructorUsedError;
   @HiveField(1)
   String? get email => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {@HiveField(0) String id,
+      {@HiveField(0) @JsonKey(ignore: true) String id,
       @HiveField(1) String? email,
       @HiveField(2) TokensModel tokens});
 
@@ -96,7 +97,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@HiveField(0) String id,
+      {@HiveField(0) @JsonKey(ignore: true) String id,
       @HiveField(1) String? email,
       @HiveField(2) TokensModel tokens});
 
@@ -141,20 +142,22 @@ class __$$_UserModelCopyWithImpl<$Res>
 @HiveType(typeId: 0, adapterName: 'UserModelAdapter')
 class _$_UserModel implements _UserModel {
   const _$_UserModel(
-      {@HiveField(0) required this.id,
+      {@HiveField(0) @JsonKey(ignore: true) this.id = '',
       @HiveField(1) required this.email,
-      @HiveField(2) required this.tokens});
+      @HiveField(2) this.tokens = const TokensModel()});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
 
   @override
   @HiveField(0)
+  @JsonKey(ignore: true)
   final String id;
   @override
   @HiveField(1)
   final String? email;
   @override
+  @JsonKey()
   @HiveField(2)
   final TokensModel tokens;
 
@@ -193,15 +196,16 @@ class _$_UserModel implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {@HiveField(0) required final String id,
+      {@HiveField(0) @JsonKey(ignore: true) final String id,
       @HiveField(1) required final String? email,
-      @HiveField(2) required final TokensModel tokens}) = _$_UserModel;
+      @HiveField(2) final TokensModel tokens}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
 
   @override
   @HiveField(0)
+  @JsonKey(ignore: true)
   String get id;
   @override
   @HiveField(1)

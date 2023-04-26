@@ -30,12 +30,12 @@ class AuthCubit extends Cubit<AuthState> {
   StreamSubscription? userStream;
 
   start() async {
-    getUserStream();
     emit(
       state.copyWith(
         status: Status.loading,
       ),
     );
+    await getUserStream();
     if (state.currentUser == null) {
       try {
         final currentUser = await getGuestUser();
@@ -44,7 +44,6 @@ class AuthCubit extends Cubit<AuthState> {
             currentUser: currentUser,
           ),
         );
-
         emit(
           state.copyWith(
             status: Status.succes,
@@ -58,6 +57,11 @@ class AuthCubit extends Cubit<AuthState> {
         );
       }
     }
+    emit(
+      state.copyWith(
+        status: Status.succes,
+      ),
+    );
 
     loadAdRewarded();
     loadAdBanner();
@@ -68,16 +72,105 @@ class AuthCubit extends Cubit<AuthState> {
       (user) {
         if (user != null) {
           emit(
-            state.copyWith(currentUser: user),
+            state.copyWith(
+              status: Status.succes,
+              currentUser: user,
+            ),
           );
         } else {
           emit(
-            state.copyWith(currentUser: null),
+            state.copyWith(
+              currentUser: null,
+            ),
           );
         }
       },
     );
   }
+
+  Future<void> registerUser({
+    required String email,
+    required String password,
+    required String repeatPassword,
+  }) async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    if (password == repeatPassword) {
+      try {
+        await authRepository.registerUser(
+          email: email,
+          password: password,
+        );
+        getUserStream();
+      } catch (e) {
+        emit(
+          state.copyWith(
+            status: Status.error,
+            errorMessage: e.toString(),
+          ),
+        );
+      }
+    } else {
+      emit(
+        state.copyWith(
+          status: Status.error,
+          errorMessage: 'Passwords must be same',
+        ),
+      );
+    }
+  }
+
+  Future<void> logInUser({
+    required String email,
+    required String password,
+  }) async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    try {
+      await authRepository.logInUser(
+        email: email,
+        password: password,
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: Status.error,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> logOutFirebaseUser() async {
+    emit(
+      state.copyWith(
+        status: Status.loading,
+      ),
+    );
+    await authRepository.logOutUser();
+    emit(
+      state.copyWith(
+        status: Status.succes,
+        currentUser: null,
+      ),
+    );
+  }
+
+  Future<void> logOutUser() async {
+    if (state.currentUser != null && state.currentUser!.email != 'guest') {
+      await logOutFirebaseUser();
+    } else {
+      await deleteGuestUser();
+    }
+  }
+
+  //GUEST
 
   Future<void> loginAsGuest() async {
     emit(state.copyWith(status: Status.loading));
@@ -155,7 +248,15 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> showAdRewarded() async {
     state.rewardedAd?.show(
       onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) async {
-        await authRepository.updateGuestUser(amount: 5);
+        if (state.currentUser!.email == 'guest') {
+          await authRepository.updateGuestUser(amount: 5);
+        } else {
+          final currentTokens = state.currentUser!.tokens.freeTokens;
+          await authRepository.updateUserTokens(
+            currentTokens: currentTokens,
+            amount: 5,
+          );
+        }
       },
     );
     loadAdRewarded();

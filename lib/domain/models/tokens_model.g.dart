@@ -49,12 +49,12 @@ class TokensModelAdapter extends TypeAdapter<_$_TokensModel> {
 
 _$_TokensModel _$$_TokensModelFromJson(Map<String, dynamic> json) =>
     _$_TokensModel(
-      freeTokens: json['freeTokens'] as int? ?? 2,
-      premiumTokens: json['premiumTokens'] as int? ?? 0,
+      freeTokens: json['free_tokens'] as int? ?? 2,
+      premiumTokens: json['premium_tokens'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$_TokensModelToJson(_$_TokensModel instance) =>
     <String, dynamic>{
-      'freeTokens': instance.freeTokens,
-      'premiumTokens': instance.premiumTokens,
+      'free_tokens': instance.freeTokens,
+      'premium_tokens': instance.premiumTokens,
     };

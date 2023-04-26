@@ -25,4 +25,32 @@ class AuthRemoteDataSource {
       },
     );
   }
+
+  Future<void> registerUser({
+    required String email,
+    required String password,
+  }) {
+    return FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+  }
+
+  Future<void> logInUser({
+    required String email,
+    required String password,
+  }) {
+    return FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+  }
+
+  Future<void> logOutUser() {
+    return FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> updateUserTokens({required Map<String, dynamic> data}) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      await collection.doc(currentUser.uid).update(data);
+    }
+  }
 }

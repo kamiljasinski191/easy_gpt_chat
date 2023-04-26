@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
+import 'package:easy_gpt_chat/domain/models/user_model.dart';
 import 'package:easy_gpt_chat/domain/repositories/auth_repository.dart';
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -65,6 +66,7 @@ class ChatCubit extends Cubit<ChatState> {
     required String message,
     required String sender,
     required Function textFieldCleaner,
+    required UserModel currentUser,
   }) async {
     bool hasConnection = await chatGptRepository.hasConnection();
 
@@ -76,61 +78,83 @@ class ChatCubit extends Cubit<ChatState> {
         ),
       );
     } else {
-      final MessageModel requestMessage = MessageModel(
-        message: message,
-        sender: sender,
-      );
-      messages.insert(0, requestMessage);
-      emit(
-        state.copyWith(
-          status: Status.loading,
-          messages: messages,
-        ),
-      );
+      if (currentUser.tokens.freeTokens > 0) {
+        final MessageModel requestMessage = MessageModel(
+          message: message,
+          sender: sender,
+        );
+        messages.insert(0, requestMessage);
+        emit(
+          state.copyWith(
+            status: Status.loading,
+            messages: messages,
+          ),
+        );
 
-      streamSubscription = chatGptRepository
-          .chatStreamConverted(
-        text: message,
-      )
-          .listen(
-        (response) {
-          final MessageModel responseMessage = MessageModel(
-            message: response.message,
-            sender: response.sender,
-          );
+        streamSubscription = chatGptRepository
+            .chatStreamConverted(
+          text: message,
+        )
+            .listen(
+          (response) {
+            final MessageModel responseMessage = MessageModel(
+              message: response.message,
+              sender: response.sender,
+            );
 
-          messages.insert(0, responseMessage);
+            messages.insert(0, responseMessage);
 
-          authRepository.updateGuestUser(amount: -1);
+            if (currentUser.email == 'guest') {
+              authRepository.updateGuestUser(amount: -1);
+            } else {
+              final currentTokens = currentUser.tokens.freeTokens;
+              authRepository.updateUserTokens(
+                amount: -1,
+                currentTokens: currentTokens,
+              );
+            }
 
-          textFieldCleaner();
+            textFieldCleaner();
 
-          emit(
-            state.copyWith(
-              messages: messages,
-              status: Status.succes,
-            ),
-          );
-        },
-      )..onError(
-          (error) {
-            if (error is DioError) {
-              if (error.response != null) {
-                final MessageModel errorMessage = MessageModel(
-                  message: error.response?.data['error']['message'] ?? error,
-                  sender: 'error',
-                );
-                messages.insert(0, errorMessage);
-                emit(
-                  state.copyWith(
-                    messages: messages,
-                    status: Status.succes,
-                  ),
-                );
+            emit(
+              state.copyWith(
+                messages: messages,
+                status: Status.succes,
+              ),
+            );
+          },
+        )..onError(
+            (error) {
+              if (error is DioError) {
+                if (error.response != null) {
+                  final MessageModel errorMessage = MessageModel(
+                    message: error.response?.data['error']['message'] ?? error,
+                    sender: 'error',
+                  );
+                  messages.insert(0, errorMessage);
+                  emit(
+                    state.copyWith(
+                      messages: messages,
+                      status: Status.succes,
+                    ),
+                  );
+                } else {
+                  final MessageModel errorMessage = MessageModel(
+                    message:
+                        error.message.substring(0, error.message.indexOf("[")),
+                    sender: 'error',
+                  );
+                  messages.insert(0, errorMessage);
+                  emit(
+                    state.copyWith(
+                      messages: messages,
+                      status: Status.succes,
+                    ),
+                  );
+                }
               } else {
                 final MessageModel errorMessage = MessageModel(
-                  message:
-                      error.message.substring(0, error.message.indexOf("[")),
+                  message: error.message ?? error,
                   sender: 'error',
                 );
                 messages.insert(0, errorMessage);
@@ -141,21 +165,16 @@ class ChatCubit extends Cubit<ChatState> {
                   ),
                 );
               }
-            } else {
-              final MessageModel errorMessage = MessageModel(
-                message: error.message ?? error,
-                sender: 'error',
-              );
-              messages.insert(0, errorMessage);
-              emit(
-                state.copyWith(
-                  messages: messages,
-                  status: Status.succes,
-                ),
-              );
-            }
-          },
+            },
+          );
+      } else {
+        emit(
+          state.copyWith(
+            status: Status.error,
+            errorMessage: 'No tokens. Get more watching short advertisement',
+          ),
         );
+      }
     }
   }
 
