@@ -35,7 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
         status: Status.loading,
       ),
     );
-    await getUserStream();
+    getUserStream();
     if (state.currentUser == null) {
       try {
         final currentUser = await getGuestUser();
@@ -137,6 +137,7 @@ class AuthCubit extends Cubit<AuthState> {
         email: email,
         password: password,
       );
+      getUserStream();
     } catch (e) {
       emit(
         state.copyWith(
