@@ -3,6 +3,7 @@ import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -53,17 +54,13 @@ class _LoginViewState extends State<LoginView> {
                         const SizedBox(
                           height: 50,
                         ),
-                        Row(
-                          children: const [
-                            SizedBox(
-                              width: 16,
-                            ),
-                            CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/chatbot_image.png'),
-                              radius: 50,
-                            ),
-                          ],
+                        const Padding(
+                          padding: EdgeInsets.only(left: 16),
+                          child: CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/chatbot_image.png'),
+                            radius: 50,
+                          ),
                         ),
                         const SizedBox(
                           height: 20,
@@ -82,6 +79,7 @@ class _LoginViewState extends State<LoginView> {
                       height: 24,
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
                           width: double.infinity,
@@ -205,18 +203,32 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 16,
+                        ),
                         TextButton(
                           onPressed: () {
                             setState(() {
                               isRegisteringAccount == false
                                   ? isRegisteringAccount = true
                                   : isRegisteringAccount = false;
+                              emailController.clear();
+                              passwordController.clear();
+                              repeatPasswordController.clear();
                             });
                           },
                           child: Text(
                             isRegisteringAccount == false
                                 ? AppLocalizations.of(context)!.dontHaveAccount
                                 : AppLocalizations.of(context)!.backToLogin,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            context.goNamed('forgotPassword');
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.forgotPassword,
                           ),
                         ),
                         const SizedBox(

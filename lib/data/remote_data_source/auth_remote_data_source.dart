@@ -42,6 +42,12 @@ class AuthRemoteDataSource {
         .signInWithEmailAndPassword(email: email, password: password);
   }
 
+  Future<void> resetPassword({
+    required String email,
+  }) {
+    return FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
   Future<void> logOutUser() {
     return FirebaseAuth.instance.signOut();
   }

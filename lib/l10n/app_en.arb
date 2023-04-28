@@ -32,5 +32,9 @@
     "login": "Login",
     "register": "Register",
     "dontHaveAccount": "Don't have account? Create now!",
-    "backToLogin": "Go back to login."
+    "backToLogin": "Go back to login.",
+    "forgotPassword": "Forgot Password?",
+    "resetPassword": "Reseting Password.",
+    "provideEmail": "Provide your email and confirm.",
+    "confirm": "Confirm"
 }

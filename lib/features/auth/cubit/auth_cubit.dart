@@ -148,6 +148,21 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> resetPassword({
+    required String email,
+  }) async {
+    try {
+      await authRepository.resetPassword(email: email);
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: Status.error,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
   Future<void> logOutFirebaseUser() async {
     emit(
       state.copyWith(

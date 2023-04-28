@@ -28,6 +28,6 @@ void main() async {
   userBox = await Hive.openBox('userBox');
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
-    runApp(const MyApp());
+    runApp(const App());
   });
 }

@@ -39,6 +39,12 @@ class AuthRepository {
     );
   }
 
+  Future<void> resetPassword({
+    required String email,
+  }) {
+    return authRemoteDataSource.resetPassword(email: email);
+  }
+
   Future<void> logOutUser() {
     return authRemoteDataSource.logOutUser();
   }
@@ -46,7 +52,7 @@ class AuthRepository {
   Future<void> updateUserTokens({
     required int currentTokens,
     required int amount,
-  }) async {
+  })  {
     return authRemoteDataSource.updateUserTokens(
       data: {
         'tokens': {'free_tokens': currentTokens + amount}

@@ -32,5 +32,9 @@
     "login": "Zaloguj",
     "register": "Zarejestruj",
     "dontHaveAccount": "Nie masz konta? Załóż je!",
-    "backToLogin": "Wróć do logowania."
+    "backToLogin": "Wróć do logowania.",
+    "forgotPassword": "Zapomniałeś hasła?",
+    "resetPassword": "Resetowanie Hasła.",
+    "provideEmail": "Podaj swój email i zatwierdź.",
+     "confirm": "Zatwierdź"
 }
