@@ -16,16 +16,26 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   var isRegisteringAccount = false;
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final repeatPasswordController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var repeatPasswordController = TextEditingController();
+  final focus = FocusNode();
+
+  var isPasswordObscured = true;
+  var isRepeatPasswordObscured = true;
 
   @override
   void initState() {
     super.initState();
-    emailController.addListener(() {});
-    passwordController.addListener(() {});
-    repeatPasswordController.addListener(() {});
+    emailController.addListener(() {
+      setState(() {});
+    });
+    passwordController.addListener(() {
+      setState(() {});
+    });
+    repeatPasswordController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -47,6 +57,7 @@ class _LoginViewState extends State<LoginView> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +119,10 @@ class _LoginViewState extends State<LoginView> {
                         SizedBox(
                           height: 45,
                           child: TextField(
+                            textInputAction: TextInputAction.next,
+                            autocorrect: false,
                             controller: emailController,
+                            keyboardType: TextInputType.emailAddress,
                             textAlignVertical: TextAlignVertical.bottom,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(
@@ -128,9 +142,31 @@ class _LoginViewState extends State<LoginView> {
                         SizedBox(
                           height: 45,
                           child: TextField(
+                            onSubmitted: !isRegisteringAccount
+                                ? null
+                                : (value) {
+                                    FocusScope.of(context).nextFocus();
+                                  },
+                            textInputAction: isRegisteringAccount
+                                ? TextInputAction.next
+                                : null,
+                            autocorrect: false,
                             controller: passwordController,
                             textAlignVertical: TextAlignVertical.bottom,
+                            obscureText: isPasswordObscured,
+                            enableSuggestions: false,
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isPasswordObscured = !isPasswordObscured;
+                                  });
+                                },
+                                icon: isPasswordObscured == true
+                                    ? const Icon(Icons.visibility_off_outlined)
+                                    : const Icon(Icons.visibility_outlined),
+                                color: Colors.blueAccent,
+                              ),
                               border: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(
@@ -145,13 +181,31 @@ class _LoginViewState extends State<LoginView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        if (isRegisteringAccount == true) ...[
-                          SizedBox(
+                        Visibility(
+                          visible: isRegisteringAccount,
+                          child: SizedBox(
                             height: 45,
                             child: TextField(
+                              textInputAction: TextInputAction.done,
+                              autocorrect: false,
                               controller: repeatPasswordController,
                               textAlignVertical: TextAlignVertical.bottom,
+                              obscureText: isRepeatPasswordObscured,
+                              enableSuggestions: false,
                               decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isRepeatPasswordObscured =
+                                          !isRepeatPasswordObscured;
+                                    });
+                                  },
+                                  icon: isRepeatPasswordObscured == true
+                                      ? const Icon(
+                                          Icons.visibility_off_outlined)
+                                      : const Icon(Icons.visibility_outlined),
+                                  color: Colors.blueAccent,
+                                ),
                                 border: const OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(
@@ -164,10 +218,10 @@ class _LoginViewState extends State<LoginView> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                        ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         const SizedBox(
                           height: 8,
                         ),
@@ -176,20 +230,29 @@ class _LoginViewState extends State<LoginView> {
                           height: 45,
                           child: ElevatedButton(
                             onPressed: isRegisteringAccount == false
-                                ? () {
-                                    context.read<AuthCubit>().logInUser(
-                                          email: emailController.text,
-                                          password: passwordController.text,
-                                        );
-                                  }
-                                : () {
-                                    context.read<AuthCubit>().registerUser(
-                                          email: emailController.text,
-                                          password: passwordController.text,
-                                          repeatPassword:
-                                              repeatPasswordController.text,
-                                        );
-                                  },
+                                ? emailController.text.isEmpty ||
+                                        passwordController.text.isEmpty
+                                    ? null
+                                    : () {
+                                        context.read<AuthCubit>().logInUser(
+                                              email: emailController.text,
+                                              password: passwordController.text,
+                                            );
+                                      }
+                                : emailController.text.isEmpty ||
+                                        passwordController.text.isEmpty ||
+                                        repeatPasswordController.text.isEmpty ||
+                                        passwordController.text !=
+                                            repeatPasswordController.text
+                                    ? null
+                                    : () {
+                                        context.read<AuthCubit>().registerUser(
+                                              email: emailController.text,
+                                              password: passwordController.text,
+                                              repeatPassword:
+                                                  repeatPasswordController.text,
+                                            );
+                                      },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -223,14 +286,15 @@ class _LoginViewState extends State<LoginView> {
                                 : AppLocalizations.of(context)!.backToLogin,
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            context.goNamed('forgotPassword');
-                          },
-                          child: Text(
-                            AppLocalizations.of(context)!.forgotPassword,
+                        if (isRegisteringAccount == false)
+                          TextButton(
+                            onPressed: () {
+                              context.goNamed('forgotPassword');
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.forgotPassword,
+                            ),
                           ),
-                        ),
                         const SizedBox(
                           height: 16,
                         ),
