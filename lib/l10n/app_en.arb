@@ -36,5 +36,6 @@
     "forgotPassword": "Forgot Password?",
     "resetPassword": "Reseting Password.",
     "provideEmail": "Provide your email and confirm.",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "passwordMustBeSame": "Passwords must be the same."
 }

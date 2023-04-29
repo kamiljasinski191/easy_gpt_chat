@@ -219,11 +219,20 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const SizedBox(
-                          height: 8,
+                        if (isRegisteringAccount &&
+                            passwordController.text !=
+                                repeatPasswordController.text) ...[
+                          Text(
+                            AppLocalizations.of(context)!.passwordMustBeSame,
+                            style: const TextStyle(
+                                fontSize: 16, color: Color(0xFFCC4444)),
+                          )
+                        ],
+                        Visibility(
+                          visible: isRegisteringAccount,
+                          child: const SizedBox(
+                            height: 16,
+                          ),
                         ),
                         SizedBox(
                           width: double.infinity,
