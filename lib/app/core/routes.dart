@@ -1,8 +1,8 @@
-import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
-import 'package:easy_gpt_chat/features/auth/auth_page.dart';
-import 'package:easy_gpt_chat/features/auth/views/forgot_password_view.dart';
-import 'package:easy_gpt_chat/features/chat/chat_page.dart';
-import 'package:easy_gpt_chat/features/root_page.dart';
+import 'package:easy_gpt_chat/app/features/auth/cubit/auth_cubit.dart';
+import 'package:easy_gpt_chat/app/features/auth/auth_page.dart';
+import 'package:easy_gpt_chat/app/features/auth/views/forgot_password_view.dart';
+import 'package:easy_gpt_chat/app/features/chat/chat_page.dart';
+import 'package:easy_gpt_chat/app/features/root_page.dart';
 import 'package:go_router/go_router.dart';
 
 GoRouter router(AuthCubit authCubit) {

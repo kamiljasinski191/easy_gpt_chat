@@ -4,7 +4,7 @@ import 'package:easy_gpt_chat/domain/models/message_model.dart';
 import 'package:easy_gpt_chat/domain/models/user_model.dart';
 import 'package:easy_gpt_chat/domain/repositories/auth_repository.dart';
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart';
-import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
+import 'package:easy_gpt_chat/app/features/chat/cubit/chat_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -62,80 +62,10 @@ void main() {
   );
 
   group(
-    'noInternetConnection',
-    () {
-      setUp(
-        () {
-          when(
-            () => mockChatGptRepository.hasConnection(),
-          ).thenAnswer(
-            (_) async => false,
-          );
-        },
-      );
-      blocTest<ChatCubit, ChatState>(
-        '''emits state error with noInternet message when user 
-        have no connection on start app.''',
-        build: () => sut,
-        act: (bloc) => bloc.start(),
-        expect: () => [
-          const ChatState(
-            status: Status.initial,
-          ),
-          const ChatState(
-            status: Status.loading,
-          ),
-          const ChatState(
-            status: Status.error,
-            errorMessage: 'noInternet',
-          ),
-        ],
-      );
-      blocTest<ChatCubit, ChatState>(
-        '''emits state error with noInternet message when user 
-        have no connection on try to send message.''',
-        build: () => sut,
-        act: (cubit) => cubit.sendMessage(
-          message: 'lol4',
-          sender: 'user',
-          textFieldCleaner: () {},
-          currentUser: const UserModel(email: 'email'),
-        ),
-        expect: () => [
-          const ChatState(
-            status: Status.error,
-            errorMessage: 'noInternet',
-          ),
-        ],
-      );
-    },
-  );
-
-  group(
-    'noApiKey',
-    () {
-      setUp(
-        () {
-          when(
-            () => mockChatGptRepository.hasConnection(),
-          ).thenAnswer(
-            (_) async => true,
-          );
-        },
-      );
-    },
-  );
-
-  group(
     'all data provided',
     () {
       setUp(
         () {
-          when(
-            () => mockChatGptRepository.hasConnection(),
-          ).thenAnswer(
-            (_) async => true,
-          );
           when(
             () => mockChatGptRepository.setToken(),
           ).thenAnswer(

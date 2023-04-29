@@ -54,11 +54,7 @@ void main() {
       ).thenAnswer(
         (invocation) async => {},
       );
-      when(
-        () => mockChatGptRemoteDataSource.hasConnection(),
-      ).thenAnswer(
-        (invocation) async => true,
-      );
+     
     },
   );
 
@@ -84,23 +80,6 @@ void main() {
       ).called(1);
     },
   );
-  test(
-    'should call hasConnection() once',
-    () async {
-      verifyNever(
-        () => mockChatGptRemoteDataSource.hasConnection(),
-      );
-      await sut.hasConnection();
-      verify(
-        () => mockChatGptRemoteDataSource.hasConnection(),
-      ).called(1);
-    },
-  );
-  test(
-    'hasConnection() should return expected value on call',
-    () async {
-      final result = await sut.hasConnection();
-      expect(result, true);
-    },
-  );
+  
+
 }

@@ -18,8 +18,8 @@ import 'package:easy_gpt_chat/data/remote_data_source/chat_gpt_remote_data_sourc
 import 'package:easy_gpt_chat/domain/repositories/auth_repository.dart' as _i7;
 import 'package:easy_gpt_chat/domain/repositories/chat_gpt_repository.dart'
     as _i5;
-import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart' as _i9;
-import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart' as _i8;
+import 'package:easy_gpt_chat/app/features/auth/cubit/auth_cubit.dart' as _i9;
+import 'package:easy_gpt_chat/app/features/chat/cubit/chat_cubit.dart' as _i8;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 

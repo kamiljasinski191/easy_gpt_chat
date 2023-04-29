@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class InitialView extends StatelessWidget {
-  const InitialView({
+class ChatInitialView extends StatelessWidget {
+  const ChatInitialView({
     Key? key,
   }) : super(key: key);
 

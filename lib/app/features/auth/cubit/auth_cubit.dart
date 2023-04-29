@@ -35,6 +35,16 @@ class AuthCubit extends Cubit<AuthState> {
         status: Status.loading,
       ),
     );
+    bool hasConnection = await authRepository.hasConnection();
+
+    if (!hasConnection) {
+      emit(
+        state.copyWith(
+          status: Status.error,
+          errorMessage: 'noInternet',
+        ),
+      );
+    }
     getUserStream();
     if (state.currentUser == null) {
       try {

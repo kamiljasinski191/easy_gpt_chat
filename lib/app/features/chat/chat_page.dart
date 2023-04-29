@@ -1,9 +1,9 @@
 import 'package:easy_gpt_chat/app/core/configure_dependencies.dart';
 import 'package:easy_gpt_chat/app/core/enums.dart';
-import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
-import 'package:easy_gpt_chat/features/chat/views/chat_view.dart';
-import 'package:easy_gpt_chat/features/chat/views/error_view.dart';
-import 'package:easy_gpt_chat/features/chat/views/initial_view.dart';
+import 'package:easy_gpt_chat/app/features/chat/cubit/chat_cubit.dart';
+import 'package:easy_gpt_chat/app/features/chat/views/chat_view.dart';
+import 'package:easy_gpt_chat/app/features/chat/views/chat_error_view.dart';
+import 'package:easy_gpt_chat/app/features/chat/views/chat_initial_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,9 +38,9 @@ class _ChatPageState extends State<ChatPage> {
           final status = state.status;
           switch (status) {
             case Status.initial:
-              return const InitialView();
+              return const ChatInitialView();
             case Status.error:
-              return const ErrorView();
+              return const ChatErrorView();
             default:
               return ChatView(
                 messages: messages,

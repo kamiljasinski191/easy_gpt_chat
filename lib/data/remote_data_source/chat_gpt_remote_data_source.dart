@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:easy_gpt_chat/env/env.dart';
 import 'package:injectable/injectable.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 @injectable
 class ChatGptRemoteDataSource {
@@ -48,8 +47,5 @@ class ChatGptRemoteDataSource {
     return openAI.setToken(Env.openAiKey);
   }
 
-  Future<bool> hasConnection() async {
-    final hasConnection = await InternetConnectionChecker().hasConnection;
-    return hasConnection;
-  }
+ 
 }

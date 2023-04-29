@@ -1,13 +1,13 @@
 import 'package:easy_gpt_chat/app/core/enums.dart';
 import 'package:easy_gpt_chat/app/dialogs/ad_revard_request_dialog.dart';
 import 'package:easy_gpt_chat/domain/models/message_model.dart';
-import 'package:easy_gpt_chat/features/auth/cubit/auth_cubit.dart';
-import 'package:easy_gpt_chat/features/chat/cubit/chat_cubit.dart';
-import 'package:easy_gpt_chat/features/chat/widgets/bot_message_bubble.dart';
-import 'package:easy_gpt_chat/features/chat/widgets/error_message_bubble.dart';
-import 'package:easy_gpt_chat/features/chat/widgets/loading_bubble.dart';
-import 'package:easy_gpt_chat/features/chat/widgets/popup_menu_widget.dart';
-import 'package:easy_gpt_chat/features/chat/widgets/user_message_bubble.dart';
+import 'package:easy_gpt_chat/app/features/auth/cubit/auth_cubit.dart';
+import 'package:easy_gpt_chat/app/features/chat/cubit/chat_cubit.dart';
+import 'package:easy_gpt_chat/app/features/chat/widgets/bot_message_bubble.dart';
+import 'package:easy_gpt_chat/app/features/chat/widgets/error_message_bubble.dart';
+import 'package:easy_gpt_chat/app/features/chat/widgets/loading_bubble.dart';
+import 'package:easy_gpt_chat/app/features/chat/widgets/popup_menu_widget.dart';
+import 'package:easy_gpt_chat/app/features/chat/widgets/user_message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -92,7 +92,8 @@ class ChatView extends StatelessWidget {
                               ),
                               Text(
                                 authState.currentUser?.tokens.freeTokens
-                                    .toString() ?? '',
+                                        .toString() ??
+                                    '',
                               ),
                               const SizedBox(
                                 width: 5,

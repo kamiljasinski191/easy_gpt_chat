@@ -4,6 +4,7 @@ import 'package:easy_gpt_chat/domain/models/tokens_model.dart';
 import 'package:easy_gpt_chat/domain/models/user_model.dart';
 import 'package:easy_gpt_chat/main.dart';
 import 'package:injectable/injectable.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 @injectable
 class AuthRepository {
@@ -103,5 +104,10 @@ class AuthRepository {
 
   Future<void> deleteGuestUser() async {
     await userBox.delete('guestUser');
+  }
+
+  Future<bool> hasConnection() async {
+    final hasConnection = await InternetConnectionChecker().hasConnection;
+    return hasConnection;
   }
 }
