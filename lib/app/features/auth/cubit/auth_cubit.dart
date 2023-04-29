@@ -44,42 +44,40 @@ class AuthCubit extends Cubit<AuthState> {
           errorMessage: 'noInternet',
         ),
       );
-    }
-    getUserStream();
-    if (state.currentUser == null) {
-      try {
-        final currentUser = await getGuestUser();
-        emit(
-          state.copyWith(
-            currentUser: currentUser,
-          ),
-        );
-        emit(
-          state.copyWith(
-            status: Status.succes,
-          ),
-        );
-      } catch (e) {
-        emit(
-          state.copyWith(
-            status: Status.error,
-          ),
-        );
+    } else {
+      getUserStream();
+      if (state.currentUser == null) {
+        try {
+          final currentUser = await getGuestUser();
+          if (currentUser != null) {
+            emit(
+              state.copyWith(
+                currentUser: currentUser,
+              ),
+            );
+            emit(
+              state.copyWith(
+                status: Status.succes,
+              ),
+            );
+          }
+        } catch (e) {
+          emit(
+            state.copyWith(
+              status: Status.error,
+            ),
+          );
+        }
       }
-    }
-    emit(
-      state.copyWith(
-        status: Status.succes,
-      ),
-    );
 
-    loadAdRewarded();
-    loadAdBanner();
+      loadAdRewarded();
+      loadAdBanner();
+    }
   }
 
   Future<void> getUserStream() async {
     userStream = authRepository.getUserStream().listen(
-      (user) {
+      (user) async {
         if (user != null) {
           emit(
             state.copyWith(
@@ -88,9 +86,15 @@ class AuthCubit extends Cubit<AuthState> {
             ),
           );
         } else {
+          await Future.delayed(
+            const Duration(
+              seconds: 1,
+            ),
+          );
           emit(
             state.copyWith(
-              currentUser: null,
+              status: Status.succes,
+              currentUser: user,
             ),
           );
         }

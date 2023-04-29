@@ -33,12 +33,6 @@ class ChatCubit extends Cubit<ChatState> {
       ),
     );
 
-    emit(
-      state.copyWith(
-        status: Status.loading,
-        messages: messages,
-      ),
-    );
     await setToken();
 
     emit(
