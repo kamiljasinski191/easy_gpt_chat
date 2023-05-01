@@ -20,6 +20,9 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
+    _textEditingController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override

@@ -174,19 +174,23 @@ class ChatView extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: chatState.status == Status.succes
-                                ? () {
-                                    context.read<ChatCubit>().sendMessage(
-                                          message: _textEditingController.text,
-                                          sender: 'user',
-                                          textFieldCleaner: () {
-                                            _textEditingController.clear();
-                                          },
-                                          currentUser: authState.currentUser!,
-                                        );
+                                ? (_textEditingController.text.length >= 5)
+                                    ? () {
+                                        context.read<ChatCubit>().sendMessage(
+                                              message:
+                                                  _textEditingController.text,
+                                              sender: 'user',
+                                              textFieldCleaner: () {
+                                                _textEditingController.clear();
+                                              },
+                                              currentUser:
+                                                  authState.currentUser!,
+                                            );
 
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                  }
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                      }
+                                    : null
                                 : null,
                             icon: const Icon(Icons.send),
                           ),

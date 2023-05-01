@@ -14,8 +14,6 @@ import 'package:injectable/injectable.dart';
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
-StreamSubscription? streamSubscription;
-
 @injectable
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(
@@ -28,6 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   final AuthRepository authRepository;
   StreamSubscription? userStream;
+  StreamSubscription? guestStream;
 
   start() async {
     emit(
@@ -49,6 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (state.currentUser == null) {
         try {
           final currentUser = await getGuestUser();
+          listenToGuestUserChanges();
           if (currentUser != null) {
             emit(
               state.copyWith(
@@ -238,7 +238,7 @@ class AuthCubit extends Cubit<AuthState> {
   void listenToGuestUserChanges() {
     final userStream = userBox.watch();
 
-    streamSubscription = userStream.listen((event) {
+    guestStream = userStream.listen((event) {
       if (event.key == 'guestUser') {
         emit(state.copyWith(currentUser: event.value));
       }
@@ -314,7 +314,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> close() {
     state.bannerAd?.dispose();
     state.rewardedAd?.dispose();
-    streamSubscription?.cancel();
+    guestStream?.cancel();
     userStream?.cancel();
     return super.close();
   }
